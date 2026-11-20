@@ -1,0 +1,9 @@
+.env
+.env.testing
+vendor/
+node_modules/
+.venv/
+__pycache__/
+data/*.xlsx
+data/*.xls
+*.log
