@@ -30,4 +30,4 @@
 - `GET /transactions` memvalidasi filter tanggal/sumber serta paginasi.
 - Tes PHPUnit diarahkan dan dibatasi ke PostgreSQL `sava_test`; konfigurasi tes menolak database lain agar tidak menyentuh `sava`.
 - Gate Tahap 3: `php artisan test` lulus (8 tes, 64 assertion). Dashboard summary, trend, top products, busy days, dan busy hours diuji lagi melalui HTTP pada data seed; jam historis kosong sesuai pesan kontrak, sementara simulasi menyediakan data jam.
-- Endpoint ML tetap diteruskan ke layanan FastAPI dan menunggu pengujian integrasi Tahap 4.
+- Tahap 4 menyelesaikan pelatihan model dan pengujian integrasi FastAPI/Laravel: endpoint ML terverifikasi melalui proxy dengan token; `/health` juga diverifikasi. Status dan metrik rinci dicatat di `ml-service/reports/evaluation.md`.

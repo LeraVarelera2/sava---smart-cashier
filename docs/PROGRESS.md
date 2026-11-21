@@ -54,4 +54,17 @@
   - HTTP pada database seed `sava`: dashboard summary, trend (16 periode), top products (10), busy days (7), busy hours, katalog, transaksi (paginasi), dan profil merespons sukses.
   - Riwayat tidak memiliki jam sehingga `busy-hours` mengembalikan daftar kosong dan pesan yang ditentukan; data simulasi mengembalikan 14 kelompok jam.
   - Penghapusan varian ber-riwayat diuji pada `sava_test`: varian dipertahankan dan dinonaktifkan.
-- **Batas tahap:** endpoint `/ml/*` menunggu verifikasi integrasi pada Tahap 4.
+- **Batas tahap:** layanan `/ml/*` diselesaikan dan diintegrasikan pada Tahap 4.
+
+## TAHAP 4: Model dan layanan ML ✅
+- **Tanggal:** 2026-11-21
+- **Forecast omzet:** model Linear Regression memakai 165 hari data historis (29 Mei-9 November 2026); data setelah 9 November tidak ikut melatih atau menggeser forecast. Titik aktual terakhir 9 November dan prediksi pertama 10 November.
+- **Klasifikasi:** Decision Tree menggunakan 239 baris varian-minggu. Dari 23 varian, 8 yang memiliki kurang dari 4 minggu data dikecualikan; respons klasifikasi menandainya `Data belum cukup`. Akurasi uji 0,5000.
+- **Bundling:** aturan Apriori dibuat terpisah untuk basis keranjang harian dan transaksi.
+- **Evaluasi:** forecast MAE Rp368.294,06, RMSE Rp482.530,86, R² 0,0125. Laporan mencatat bahwa daya jelas forecast masih rendah dan akurasi klasifikasi belum kuat.
+- **Artefak:** model dan `metrics.json` ada di `ml-service/models/`; laporan, confusion matrix, dan pohon keputusan ada di `ml-service/reports/`.
+- **GATE:** LULUS
+  - `train.py` berjalan; `pip check` dan `py_compile` bersih.
+  - `/health`, `/forecast`, `/classification`, `/bundling` (basis `day` dan `transaction`), dan `/evaluation` FastAPI diverifikasi.
+  - Proxy Laravel `/api/ml/*` diverifikasi dengan bearer token.
+  - `php artisan test`: 9 tes, 68 assertion lulus; Pint lulus setelah pemformatan akhir.

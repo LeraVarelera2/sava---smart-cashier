@@ -1,0 +1,221 @@
+{
+  "generated_at": "2026-11-21T18:54:12.615007+07:00",
+  "data_source": "transactions.source='historis'",
+  "forecast": {
+    "status": "trained",
+    "history_start": "2026-05-29",
+    "last_historical_date": "2026-11-09",
+    "days_of_history": 165,
+    "train_days": 132,
+    "test_days": 33,
+    "mae": 368294.0637001332,
+    "rmse": 482530.8610583569,
+    "r2": 0.012500227650299789,
+    "train_mae": 308966.05541909067
+  },
+  "classification": {
+    "status": "trained",
+    "eligible_variant_count": 15,
+    "excluded_variant_count": 8,
+    "excluded_variants": [
+      "Mix Keju",
+      "Pisbol Beef Ubi Ungu (Mix)",
+      "Pisbol Keju Ubi Ungu (Mix)",
+      "Pisbol Pisang Coklat (Mix)",
+      "Pisbol Tape Beef (Mix)",
+      "Pisbol Tape Ubi Ungu (Mix)",
+      "Pisbol Ubi Ungu",
+      "Pisbol Ubi Ungu Pisang Keju (Mix)"
+    ],
+    "weekly_rows": 239,
+    "message": null,
+    "training_rows": 191,
+    "testing_rows": 48,
+    "thresholds": {
+      "p33": 0.0,
+      "p66": 10.800000000000011
+    },
+    "accuracy_train": 0.7172774869109948,
+    "accuracy_test": 0.5,
+    "confusion_matrix": {
+      "labels": [
+        "tidak laris",
+        "kurang laris",
+        "laris"
+      ],
+      "values": [
+        [
+          14,
+          7,
+          9
+        ],
+        [
+          0,
+          0,
+          2
+        ],
+        [
+          4,
+          2,
+          10
+        ]
+      ]
+    },
+    "classification_report": {
+      "tidak laris": {
+        "precision": 0.7777777777777778,
+        "recall": 0.4666666666666667,
+        "f1-score": 0.5833333333333334,
+        "support": 30.0
+      },
+      "kurang laris": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 2.0
+      },
+      "laris": {
+        "precision": 0.47619047619047616,
+        "recall": 0.625,
+        "f1-score": 0.5405405405405406,
+        "support": 16.0
+      },
+      "accuracy": 0.5,
+      "macro avg": {
+        "precision": 0.41798941798941797,
+        "recall": 0.36388888888888893,
+        "f1-score": 0.3746246246246246,
+        "support": 48.0
+      },
+      "weighted avg": {
+        "precision": 0.6448412698412698,
+        "recall": 0.5,
+        "f1-score": 0.5447635135135135,
+        "support": 48.0
+      }
+    },
+    "feature_importance": [
+      {
+        "feature": "avg_price_per_pc",
+        "importance": 0.3272577156093039
+      },
+      {
+        "feature": "lag1_pcs",
+        "importance": 0.3234685919574473
+      },
+      {
+        "feature": "variant_name_Pisbol Coklat Tape (Mix)",
+        "importance": 0.12473638599793707
+      },
+      {
+        "feature": "month_7",
+        "importance": 0.09479808396573391
+      },
+      {
+        "feature": "variant_name_Premium Coklat",
+        "importance": 0.09357139867222869
+      },
+      {
+        "feature": "variant_name_Pisbol Coklat Keju (Mix)",
+        "importance": 0.033241822861837196
+      },
+      {
+        "feature": "variant_name_Premium",
+        "importance": 0.002926000935511932
+      },
+      {
+        "feature": "variant_name_Pisbol Beef",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Pisbol Coklat",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Pisbol Coklat Beef (Mix)",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Pisbol Keju",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Pisbol Keju Tape (Mix)",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Pisbol Tape",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Premium Coklat Keju (Mix)",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Premium Keju",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Premium Keju Tape (Mix)",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Premium Mix",
+        "importance": 0.0
+      },
+      {
+        "feature": "variant_name_Premium Mix Tape Keju",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_1",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_2",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_3",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_4",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_5",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_6",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_8",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_9",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_10",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_11",
+        "importance": 0.0
+      },
+      {
+        "feature": "month_12",
+        "importance": 0.0
+      },
+      {
+        "feature": "avg_pack_size",
+        "importance": 0.0
+      }
+    ],
+    "tree_rules": "|--- avg_price_per_pc <= 3687.50\n|   |--- lag1_pcs <= 67.00\n|   |   |--- month_7 <= 0.50\n|   |   |   |--- variant_name_Pisbol Coklat Tape (Mix) <= 0.50\n|   |   |   |   |--- class: laris\n|   |   |   |--- variant_name_Pisbol Coklat Tape (Mix) >  0.50\n|   |   |   |   |--- class: kurang laris\n|   |   |--- month_7 >  0.50\n|   |   |   |--- class: kurang laris\n|   |--- lag1_pcs >  67.00\n|   |   |--- variant_name_Pisbol Coklat Keju (Mix) <= 0.50\n|   |   |   |--- variant_name_Pisbol Coklat Tape (Mix) <= 0.50\n|   |   |   |   |--- class: laris\n|   |   |   |--- variant_name_Pisbol Coklat Tape (Mix) >  0.50\n|   |   |   |   |--- class: laris\n|   |   |--- variant_name_Pisbol Coklat Keju (Mix) >  0.50\n|   |   |   |--- class: tidak laris\n|--- avg_price_per_pc >  3687.50\n|   |--- lag1_pcs <= 20.00\n|   |   |--- variant_name_Premium Coklat <= 0.50\n|   |   |   |--- variant_name_Premium <= 0.50\n|   |   |   |   |--- class: tidak laris\n|   |   |   |--- variant_name_Premium >  0.50\n|   |   |   |   |--- class: tidak laris\n|   |   |--- variant_name_Premium Coklat >  0.50\n|   |   |   |--- class: kurang laris\n|   |--- lag1_pcs >  20.00\n|   |   |--- class: kurang laris\n"
+  }
+}

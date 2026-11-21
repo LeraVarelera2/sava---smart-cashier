@@ -9,6 +9,7 @@ use App\Models\TransactionItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -166,6 +167,23 @@ class ApiWorkflowTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.business_name', 'Toko Contoh')
             ->assertJsonStructure(['data' => ['kesibukan' => ['hari_tersibuk', 'jam_tersibuk']]]);
+    }
+
+    public function test_ml_proxy_forwards_json_and_maps_unavailable_service_to_503(): void
+    {
+        config(['services.ml.url' => 'http://ml.test']);
+        Http::fake([
+            'ml.test/forecast*' => Http::response(['forecast' => [['tanggal' => '2026-11-10', 'omzet' => 100]]]),
+            'ml.test/classification*' => Http::response(['detail' => 'Model belum tersedia.'], 503),
+        ]);
+        Sanctum::actingAs(User::factory()->create());
+
+        $this->getJson('/api/ml/forecast?days=1')
+            ->assertOk()
+            ->assertJsonPath('forecast.0.tanggal', '2026-11-10');
+        $this->getJson('/api/ml/classification')
+            ->assertStatus(503)
+            ->assertJsonPath('message', 'Layanan analisis belum aktif.');
     }
 
     private function createVariant(int $price, int $packSize): ProductVariant
