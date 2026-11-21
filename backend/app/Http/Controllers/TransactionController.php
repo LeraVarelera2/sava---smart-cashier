@@ -2,52 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTransactionRequest;
+use App\Http\Requests\TransactionIndexRequest;
 use App\Models\ProductVariant;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
 {
-    public function store(Request $request): JsonResponse
+    public function store(StoreTransactionRequest $request): JsonResponse
     {
-        $request->validate([
-            'items' => 'required|array|min:1|max:50',
-            'items.*.variant_id' => 'required|integer|exists:product_variants,id',
-            'items.*.qty' => 'required|integer|min:1|max:999',
-        ], [
-            'items.required' => 'Item transaksi wajib diisi.',
-            'items.min' => 'Minimal 1 item dalam transaksi.',
-            'items.max' => 'Maksimal 50 item dalam transaksi.',
-            'items.*.variant_id.required' => 'Varian produk wajib dipilih.',
-            'items.*.variant_id.exists' => 'Varian produk tidak ditemukan.',
-            'items.*.qty.required' => 'Jumlah wajib diisi.',
-            'items.*.qty.min' => 'Jumlah minimal 1.',
-            'items.*.qty.max' => 'Jumlah maksimal 999.',
-        ]);
-
-        // Validate all variants are active
-        $variantIds = collect($request->items)->pluck('variant_id')->unique();
-        $activeVariants = ProductVariant::whereIn('id', $variantIds)
-            ->where('is_active', true)
-            ->pluck('id');
-
-        $inactiveIds = $variantIds->diff($activeVariants);
-        if ($inactiveIds->isNotEmpty()) {
-            return response()->json([
-                'message' => 'Beberapa varian tidak aktif.',
-                'errors' => ['items' => ['Varian dengan ID ' . $inactiveIds->implode(', ') . ' tidak aktif.']],
-            ], 422);
-        }
-
-        $transaction = DB::transaction(function () use ($request) {
+        $items = $request->validated()['items'];
+        $transaction = DB::transaction(function () use ($request, $items) {
             $now = Carbon::now('Asia/Jakarta');
             $dateStr = $now->format('Ymd');
 
-            // Generate sequential code for today
+            DB::table('users')
+                ->where('id', $request->user()->getAuthIdentifier())
+                ->lockForUpdate()
+                ->first();
+
+            $variantIds = collect($items)->pluck('variant_id')->unique()->values();
+            $variants = ProductVariant::whereIn('id', $variantIds)
+                ->lockForUpdate()
+                ->get()
+                ->keyBy('id');
+            $invalidIds = $variantIds->filter(function ($id) use ($variants) {
+                return ! $variants->has($id) || ! $variants->get($id)->is_active;
+            });
+            if ($invalidIds->isNotEmpty()) {
+                throw ValidationException::withMessages([
+                    'items' => ['Varian tidak ditemukan atau sudah tidak aktif: '.$invalidIds->implode(', ').'.'],
+                ]);
+            }
+
             $lastCode = Transaction::where('code', 'like', "TRX-{$dateStr}-%")
                 ->orderByDesc('code')
                 ->value('code');
@@ -71,15 +63,15 @@ class TransactionController extends Controller
 
             $totalAmount = 0;
 
-            foreach ($request->items as $item) {
-                $variant = ProductVariant::find($item['variant_id']);
+            foreach ($items as $item) {
+                $variant = $variants->get($item['variant_id']);
                 $unitPrice = $variant->price;
                 $subtotal = $unitPrice * $item['qty'];
                 $totalAmount += $subtotal;
 
                 TransactionItem::create([
                     'transaction_id' => $transaction->id,
-                    'product_variant_id' => $item['variant_id'],
+                    'product_variant_id' => $variant->id,
                     'qty' => $item['qty'],
                     'unit_price' => $unitPrice,
                     'subtotal' => $subtotal,
@@ -99,21 +91,22 @@ class TransactionController extends Controller
         ], 201);
     }
 
-    public function index(Request $request): JsonResponse
+    public function index(TransactionIndexRequest $request): JsonResponse
     {
+        $filters = $request->validated();
         $query = Transaction::with('items.variant')
             ->orderByDesc('transaction_date')
             ->orderByDesc('id');
 
-        if ($request->has('date')) {
-            $query->whereDate('transaction_date', $request->date);
+        if (! empty($filters['date'])) {
+            $query->whereDate('transaction_date', $filters['date']);
         }
 
-        if ($request->has('source') && $request->source !== 'semua') {
-            $query->where('source', $request->source);
+        if (! empty($filters['source']) && $filters['source'] !== 'semua') {
+            $query->where('source', $filters['source']);
         }
 
-        $transactions = $query->paginate(20);
+        $transactions = $query->paginate($filters['per_page'] ?? 20);
 
         return response()->json($transactions);
     }

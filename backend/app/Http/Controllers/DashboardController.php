@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DashboardFilterRequest;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    private function getBaseQuery(Request $request)
+    private function getBaseQuery(DashboardFilterRequest $request): Builder
     {
-        $source = $request->input('source', 'semua');
-        $range = $request->input('range', 'semua');
+        $filters = $request->validated();
+        $source = $filters['source'] ?? 'semua';
+        $range = $filters['range'] ?? 'semua';
 
         $query = Transaction::query();
 
@@ -41,11 +43,11 @@ class DashboardController extends Controller
         return $query;
     }
 
-    public function summary(Request $request): JsonResponse
+    public function summary(DashboardFilterRequest $request): JsonResponse
     {
         $query = $this->getBaseQuery($request);
 
-        $stats = $query->selectRaw('
+        $stats = (clone $query)->selectRaw('
             COALESCE(SUM(total_amount), 0) as total_omzet,
             COUNT(*) as jumlah_transaksi,
             COALESCE(AVG(total_amount), 0) as rata_rata_omzet
@@ -68,10 +70,10 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function trend(Request $request): JsonResponse
+    public function trend(DashboardFilterRequest $request): JsonResponse
     {
         $query = $this->getBaseQuery($request);
-        $range = $request->input('range', 'semua');
+        $range = $request->validated()['range'] ?? 'semua';
 
         if ($range === 'semua') {
             // Per month for "semua"
@@ -83,7 +85,7 @@ class DashboardController extends Controller
         } else {
             // Per day
             $data = (clone $query)
-                ->selectRaw("transaction_date::text as period, SUM(total_amount) as omzet, COUNT(*) as jumlah")
+                ->selectRaw('transaction_date::text as period, SUM(total_amount) as omzet, COUNT(*) as jumlah')
                 ->groupBy('transaction_date')
                 ->orderBy('transaction_date')
                 ->get();
@@ -92,7 +94,7 @@ class DashboardController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function topProducts(Request $request): JsonResponse
+    public function topProducts(DashboardFilterRequest $request): JsonResponse
     {
         $query = $this->getBaseQuery($request);
         $transactionIds = (clone $query)->pluck('id');
@@ -112,11 +114,16 @@ class DashboardController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function busyDays(Request $request): JsonResponse
+    public function busyDays(DashboardFilterRequest $request): JsonResponse
     {
         $query = $this->getBaseQuery($request);
+        $daily = (clone $query)
+            ->select('transaction_date')
+            ->selectRaw('SUM(total_amount) as daily_total, COUNT(*) as daily_count')
+            ->groupBy('transaction_date');
 
-        $data = (clone $query)
+        $data = DB::query()
+            ->fromSub($daily, 'daily')
             ->selectRaw("
                 EXTRACT(ISODOW FROM transaction_date)::int as day_number,
                 CASE EXTRACT(ISODOW FROM transaction_date)::int
@@ -131,25 +138,20 @@ class DashboardController extends Controller
                 ROUND(AVG(daily_total)) as rata_rata_omzet,
                 ROUND(AVG(daily_count)) as rata_rata_transaksi
             ")
-            ->fromSub(function ($sub) use ($query) {
-                $sub->from((clone $query)->toBase())
-                    ->selectRaw('transaction_date, SUM(total_amount) as daily_total, COUNT(*) as daily_count')
-                    ->groupBy('transaction_date');
-            }, 'daily')
-            ->groupBy(DB::raw("EXTRACT(ISODOW FROM transaction_date)"))
+            ->groupByRaw('EXTRACT(ISODOW FROM transaction_date)')
             ->orderBy('day_number')
             ->get();
 
         return response()->json(['data' => $data]);
     }
 
-    public function busyHours(Request $request): JsonResponse
+    public function busyHours(DashboardFilterRequest $request): JsonResponse
     {
         $query = $this->getBaseQuery($request);
 
         $hasTimestamp = (clone $query)->whereNotNull('transacted_at')->exists();
 
-        if (!$hasTimestamp) {
+        if (! $hasTimestamp) {
             return response()->json([
                 'data' => [],
                 'message' => 'Belum ada data jam. Jam tercatat dari transaksi kasir.',
@@ -158,7 +160,7 @@ class DashboardController extends Controller
 
         $data = (clone $query)
             ->whereNotNull('transacted_at')
-            ->selectRaw("EXTRACT(HOUR FROM transacted_at)::int as jam, COUNT(*) as jumlah_transaksi")
+            ->selectRaw('EXTRACT(HOUR FROM transacted_at)::int as jam, COUNT(*) as jumlah_transaksi')
             ->groupBy('jam')
             ->orderBy('jam')
             ->get();

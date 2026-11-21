@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateBusinessProfileRequest;
 use App\Models\BusinessProfile;
 use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class BusinessProfileController extends Controller
 {
@@ -36,7 +35,7 @@ class BusinessProfileController extends Controller
 
         // Jam tersibuk (top 3, only from data with transacted_at)
         $busiestHours = Transaction::whereNotNull('transacted_at')
-            ->selectRaw("EXTRACT(HOUR FROM transacted_at)::int as jam, COUNT(*) as total")
+            ->selectRaw('EXTRACT(HOUR FROM transacted_at)::int as jam, COUNT(*) as total')
             ->groupBy('jam')
             ->orderByDesc('total')
             ->limit(3)
@@ -44,7 +43,7 @@ class BusinessProfileController extends Controller
 
         $profile->kesibukan = [
             'hari_tersibuk' => $busiestDay ? $busiestDay->hari : null,
-            'jam_tersibuk' => $busiestHours->map(fn($h) => [
+            'jam_tersibuk' => $busiestHours->map(fn ($h) => [
                 'jam' => sprintf('%02d:00', $h->jam),
                 'jumlah' => (int) $h->total,
             ])->toArray(),
@@ -53,29 +52,14 @@ class BusinessProfileController extends Controller
         return response()->json(['data' => $profile]);
     }
 
-    public function update(Request $request): JsonResponse
+    public function update(UpdateBusinessProfileRequest $request): JsonResponse
     {
-        $request->validate([
-            'business_name' => 'required|string|max:255',
-            'business_type' => 'nullable|string|max:255',
-            'address' => 'nullable|string|max:500',
-            'rt' => 'nullable|string|max:10',
-            'rw' => 'nullable|string|max:10',
-            'kelurahan' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-        ], [
-            'business_name.required' => 'Nama usaha wajib diisi.',
-        ]);
-
         $profile = BusinessProfile::firstOrCreate(
             ['id' => 1],
             ['business_name' => 'Usaha Saya']
         );
 
-        $profile->update($request->only([
-            'business_name', 'business_type', 'address',
-            'rt', 'rw', 'kelurahan', 'phone',
-        ]));
+        $profile->update($request->validated());
 
         return response()->json([
             'message' => 'Profil usaha berhasil diperbarui.',

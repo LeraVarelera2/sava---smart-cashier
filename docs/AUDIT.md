@@ -22,10 +22,12 @@
 - `GET /api/me` tanpa token dan dengan `Accept: application/json`: 401 JSON.
 - `GET /api/me` tanpa token dan tanpa header Accept: 401 JSON.
 
-## Temuan untuk Tahap 3
-- Produk dan varian saat ini sudah mendukung penonaktifan varian yang memiliki riwayat transaksi, tetapi perlu pengujian end-to-end.
-- Belum ada Form Request khusus; validasi controller perlu tetap dipertahankan atau diekstrak pada Tahap 3 sesuai kebutuhan tes.
-- Controller dashboard perlu diuji dengan data kecil untuk memastikan range mundur dari tanggal transaksi terakhir dan agregasi harian/bulanan.
-- `GET /transactions` perlu diuji paginasi serta filter `date` dan `source`.
-- Endpoint create transaction perlu diuji supaya harga dan subtotal selalu berasal dari database, bukan payload klien.
-- Endpoint ML adalah proxy dan hasil akhirnya diuji setelah layanan FastAPI tersedia di Tahap 4.
+## Tindak lanjut Tahap 3
+- Validasi login, katalog, transaksi, filter dashboard, dan profil menggunakan Form Request dengan pesan Bahasa Indonesia.
+- Create transaksi menghitung harga/subtotal dari varian database di dalam transaksi DB; varian dikunci saat digunakan dan kode transaksi harian diserialisasi untuk mencegah benturan.
+- Produk/varian dengan riwayat tidak dihapus permanen; operasi penghapusan dilakukan aman terhadap transaksi yang sedang tersimpan.
+- Filter dashboard memakai sumber/rentang yang tervalidasi. Range mundur dihitung dari tanggal transaksi terakhir untuk sumber terpilih.
+- `GET /transactions` memvalidasi filter tanggal/sumber serta paginasi.
+- Tes PHPUnit diarahkan dan dibatasi ke PostgreSQL `sava_test`; konfigurasi tes menolak database lain agar tidak menyentuh `sava`.
+- Gate Tahap 3: `php artisan test` lulus (8 tes, 64 assertion). Dashboard summary, trend, top products, busy days, dan busy hours diuji lagi melalui HTTP pada data seed; jam historis kosong sesuai pesan kontrak, sementara simulasi menyediakan data jam.
+- Endpoint ML tetap diteruskan ke layanan FastAPI dan menunggu pengujian integrasi Tahap 4.

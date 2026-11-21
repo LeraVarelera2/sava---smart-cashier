@@ -43,3 +43,15 @@
 - **Koreksi audit data sebelum Tahap 3:** nomor `No.` pada semua sheet unik dan berurutan; aturan deduplikasi lama sebelumnya membuang 150 baris penjualan yang berbeda nomor. Aturan sudah diperbaiki, 150 baris lama disimpan di `ml-service/reports/dropped_duplicates.csv`, dan semua 699 baris kini dipertahankan. Nama varian turun dari 28 menjadi 26 setelah normalisasi urutan rasa pada Mix; nama lain yang meragukan tetap terpisah di `ml-service/reports/variant_review.md`.
 - **Alias varian:** 3 keputusan alias diterapkan dari `data/variant_aliases.csv`; jumlah varian 26 menjadi 23 tanpa mengubah 699 baris atau total Rp72.141.000. Empat varian belum diputuskan tetap dipertahankan apa adanya.
 - **Perbandingan per sheet:** jumlah baris dan total harga Excel cocok dengan CSV dan database untuk Mei-November.
+
+## TAHAP 3: API backend ✅
+- **Tanggal:** 2026-11-21
+- **Pengerjaan:** menambahkan Form Request dengan pesan Bahasa Indonesia; memperkuat katalog, transaksi berbasis harga server, filter/paginasi transaksi, agregasi/range dashboard, dan profil usaha. Penghapusan produk/varian ber-riwayat mempertahankan data dengan menonaktifkannya.
+- **Keamanan tes data:** PHPUnit dipaksa menggunakan PostgreSQL `sava_test`; `Tests\TestCase` menghentikan tes jika database bukan `sava_test`.
+- **GATE:** LULUS
+  - `php artisan test`: 8 tes, 64 assertion lulus.
+  - `vendor/bin/pint --test` pada file PHP terkait: lulus.
+  - HTTP pada database seed `sava`: dashboard summary, trend (16 periode), top products (10), busy days (7), busy hours, katalog, transaksi (paginasi), dan profil merespons sukses.
+  - Riwayat tidak memiliki jam sehingga `busy-hours` mengembalikan daftar kosong dan pesan yang ditentukan; data simulasi mengembalikan 14 kelompok jam.
+  - Penghapusan varian ber-riwayat diuji pada `sava_test`: varian dipertahankan dan dinonaktifkan.
+- **Batas tahap:** endpoint `/ml/*` menunggu verifikasi integrasi pada Tahap 4.
