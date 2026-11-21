@@ -28,3 +28,15 @@
   - `/api/me` dengan token: 200
   - `/api/me` tanpa token dengan dan tanpa header Accept: 401 JSON
   - [docs/AUDIT.md](AUDIT.md) tersedia
+
+## TAHAP 2: Data science cleaning, EDA, dan import ✅
+- **Tanggal:** 2026-11-21
+- **Lingkungan:** virtual environment Python dibuat di `ml-service/.venv`; dependensi dipasang dari `ml-service/requirements.txt`; `pip check` bersih.
+- **Data:** membaca 7 sheet Mei-November, menghasilkan `data/cleaned_historis.csv` berisi 549 baris dan `ml-service/reports/cleaning_report.md`.
+- **EDA:** menghasilkan ringkasan dan 5 grafik PNG di `ml-service/reports/eda/`.
+- **Import:** `HistoricalDataSeeder` membuat varian dan 549 transaksi historis; `SimulationSeeder` membuat 450 transaksi simulasi deterministik untuk 30 hari.
+- **GATE:** LULUS
+  - `php artisan migrate:fresh --seed --no-interaction`: sukses
+  - jumlah transaksi historis: 549, sama dengan baris CSV
+  - total historis database: Rp64.060.000, sama dengan jumlah `total_harga` CSV
+  - laporan cleaning dan folder EDA tersedia

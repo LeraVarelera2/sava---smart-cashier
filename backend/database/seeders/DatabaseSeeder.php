@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             ['business_name' => 'Usaha Saya']
         );
 
-        // Historical and simulation seeders will be called after data cleaning
+        // Import cleaned historical data, then generate deterministic test simulations.
         if (file_exists(base_path('../data/cleaned_historis.csv'))) {
             $this->call(HistoricalDataSeeder::class);
             $this->call(SimulationSeeder::class);
