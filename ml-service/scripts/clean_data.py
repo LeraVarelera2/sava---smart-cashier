@@ -11,6 +11,7 @@ REPORT = ROOT / "ml-service" / "reports" / "cleaning_report.md"
 DROP_REPORT = ROOT / "ml-service" / "reports" / "dropped_duplicates.csv"
 VARIANT_REVIEW = ROOT / "ml-service" / "reports" / "variant_review.md"
 OUTPUT = DATA_DIR / "cleaned_historis.csv"
+ALIASES = DATA_DIR / "variant_aliases.csv"
 
 
 def snake(value):
@@ -100,6 +101,25 @@ def source_value(value):
     if isinstance(value, pd.Timestamp):
         return value.isoformat()
     return str(value)
+
+
+def load_variant_aliases():
+    if not ALIASES.is_file():
+        raise FileNotFoundError(f"File alias varian tidak ditemukan: {ALIASES}")
+    frame = pd.read_csv(ALIASES, dtype=str)
+    if list(frame.columns) != ["alias", "canonical"]:
+        raise ValueError("variant_aliases.csv harus memiliki kolom alias,canonical.")
+
+    aliases = {}
+    for _, row in frame.iterrows():
+        alias = clean_text(row["alias"])
+        canonical = clean_text(row["canonical"])
+        if not alias or not canonical:
+            raise ValueError("Kolom alias dan canonical tidak boleh kosong.")
+        if alias in aliases:
+            raise ValueError(f"Alias varian duplikat: {alias}")
+        aliases[alias] = canonical
+    return aliases
 
 
 def find_excel():
@@ -247,6 +267,14 @@ def main():
         for variant in before_mix_normalization["variant"].unique()
     )
     cleaned["variant"] = cleaned["variant"].map(canonical_mix)
+    aliases = load_variant_aliases()
+    alias_counts = {
+        alias: int(cleaned["variant"].eq(alias).sum())
+        for alias in aliases
+    }
+    variants_before_aliases = cleaned["variant"].nunique()
+    cleaned["variant"] = cleaned["variant"].replace(aliases)
+    variants_after_aliases = cleaned["variant"].nunique()
     duplicate_key = ["tanggal", "nama_produk", "variant", "isi_pcs", "quantity", "total_harga", "harga_per_pack", "sheet"]
     # Archive rows the previous rule mistakenly dropped because it ignored No.
     prior_rule_duplicates = before_mix_normalization.duplicated(subset=duplicate_key, keep="first")
@@ -307,13 +335,10 @@ def main():
 
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     review_names = {
-        "Pisbol Smoked Beef",
         "Pisbol Pisang Coklat (Mix)",
         "Pisbol Ubi Ungu Pisang Keju (Mix)",
         "Mix Keju",
-        "Bolen Tape Keju",
         "Premium Mix",
-        "Pisbol Ubi Ungu Keju",
     }
     review_rows = []
     for variant in sorted(review_names.intersection(set(cleaned["variant"]))):
@@ -321,9 +346,21 @@ def main():
         review_rows.append(
             f"| {variant} | {len(subset)} | {', '.join(sorted(subset['sheet'].unique()))} |"
         )
+    alias_rows = [
+        f"| {alias} | {canonical} | {alias_counts[alias]} |"
+        for alias, canonical in aliases.items()
+    ]
     VARIANT_REVIEW.write_text(
         "\n".join([
             "# Review Nama Varian",
+            "",
+            "## Sudah diputuskan dan diterapkan",
+            "",
+            "| Alias | Nama kanonis | Baris dialihkan |",
+            "|---|---|---:|",
+            *alias_rows,
+            "",
+            "## Belum diputuskan (dipertahankan apa adanya)",
             "",
             "Varian berikut sengaja tidak digabung atau dinormalisasi otomatis; mohon tentukan apakah nama-nama ini valid atau perlu koreksi.",
             "",
@@ -365,6 +402,12 @@ def main():
         f"- Baris dibuang - teks/kosong: {dropped['empty']}",
         f"- Baris dibuang - salinan sumber yang benar-benar identik (termasuk No.): {duplicate_rows}",
         f"- Baris yang aturan deduplikasi lama keliru buang (disimpan di `{DROP_REPORT.relative_to(ROOT)}`): {len(historical_dropped)}; seluruhnya dipertahankan pada CSV baru.",
+        f"- Varian unik sebelum alias: {variants_before_aliases}; sesudah alias: {variants_after_aliases}.",
+        "- Alias varian diterapkan:",
+        *[
+            f"  - `{alias}` -> `{canonical}`: {alias_counts[alias]} baris"
+            for alias, canonical in aliases.items()
+        ],
         f"- Tanggal diisi dari baris sebelumnya: {filled_dates}",
         f"- Perbaikan spasi: {cleaned_spaces}",
         f"- Varian digabung karena beda kapital/spasi: {merged_variants}",

@@ -41,4 +41,5 @@
   - total historis database: Rp72.141.000, sama dengan jumlah `total_harga` CSV
   - laporan cleaning dan folder EDA tersedia
 - **Koreksi audit data sebelum Tahap 3:** nomor `No.` pada semua sheet unik dan berurutan; aturan deduplikasi lama sebelumnya membuang 150 baris penjualan yang berbeda nomor. Aturan sudah diperbaiki, 150 baris lama disimpan di `ml-service/reports/dropped_duplicates.csv`, dan semua 699 baris kini dipertahankan. Nama varian turun dari 28 menjadi 26 setelah normalisasi urutan rasa pada Mix; nama lain yang meragukan tetap terpisah di `ml-service/reports/variant_review.md`.
+- **Alias varian:** 3 keputusan alias diterapkan dari `data/variant_aliases.csv`; jumlah varian 26 menjadi 23 tanpa mengubah 699 baris atau total Rp72.141.000. Empat varian belum diputuskan tetap dipertahankan apa adanya.
 - **Perbandingan per sheet:** jumlah baris dan total harga Excel cocok dengan CSV dan database untuk Mei-November.

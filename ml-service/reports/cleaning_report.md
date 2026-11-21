@@ -34,6 +34,11 @@
 - Baris dibuang - teks/kosong: 0
 - Baris dibuang - salinan sumber yang benar-benar identik (termasuk No.): 0
 - Baris yang aturan deduplikasi lama keliru buang (disimpan di `ml-service\reports\dropped_duplicates.csv`): 150; seluruhnya dipertahankan pada CSV baru.
+- Varian unik sebelum alias: 26; sesudah alias: 23.
+- Alias varian diterapkan:
+  - `Pisbol Smoked Beef` -> `Pisbol Beef`: 6 baris
+  - `Bolen Tape Keju` -> `Pisbol Keju Tape (Mix)`: 14 baris
+  - `Pisbol Ubi Ungu Keju` -> `Pisbol Keju Ubi Ungu (Mix)`: 1 baris
 - Tanggal diisi dari baris sebelumnya: 0
 - Perbaikan spasi: 0
 - Varian digabung karena beda kapital/spasi: 0
@@ -41,7 +46,6 @@
 - Rentang tanggal akhir: 2026-05-29 sampai 2026-11-09
 
 ## Daftar varian akhir
-- Bolen Tape Keju
 - Mix Keju
 - Pisbol Beef
 - Pisbol Beef Ubi Ungu (Mix)
@@ -53,12 +57,10 @@
 - Pisbol Keju Tape (Mix)
 - Pisbol Keju Ubi Ungu (Mix)
 - Pisbol Pisang Coklat (Mix)
-- Pisbol Smoked Beef
 - Pisbol Tape
 - Pisbol Tape Beef (Mix)
 - Pisbol Tape Ubi Ungu (Mix)
 - Pisbol Ubi Ungu
-- Pisbol Ubi Ungu Keju
 - Pisbol Ubi Ungu Pisang Keju (Mix)
 - Premium
 - Premium Coklat
@@ -77,8 +79,6 @@
 - `Pisbol Keju Ubi Ungu (Mix)` mirip dengan: `Pisbol Tape Ubi Ungu (Mix)`, `Pisbol Beef Ubi Ungu (Mix)`
 - `Pisbol Tape Beef (Mix)` mirip dengan: `Pisbol Coklat Beef (Mix)`
 - `Pisbol Tape Ubi Ungu (Mix)` mirip dengan: `Pisbol Keju Ubi Ungu (Mix)`, `Pisbol Beef Ubi Ungu (Mix)`
-- `Pisbol Ubi Ungu` mirip dengan: `Pisbol Ubi Ungu Keju`
-- `Pisbol Ubi Ungu Keju` mirip dengan: `Pisbol Ubi Ungu`
 
 ## Baris menyimpang harga per pack
 

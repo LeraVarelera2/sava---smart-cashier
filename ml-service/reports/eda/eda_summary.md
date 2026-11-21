@@ -14,7 +14,7 @@
 - Min: 12000.00
 - Max: 1800000.00
 
-- Jumlah varian: 26
+- Jumlah varian: 23
 
 ## Total omzet per bulan
 - 2026-05: Rp1,104,000
