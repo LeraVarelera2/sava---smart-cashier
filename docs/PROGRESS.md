@@ -68,3 +68,15 @@
   - `/health`, `/forecast`, `/classification`, `/bundling` (basis `day` dan `transaction`), dan `/evaluation` FastAPI diverifikasi.
   - Proxy Laravel `/api/ml/*` diverifikasi dengan bearer token.
   - `php artisan test`: 9 tes, 68 assertion lulus; Pint lulus setelah pemformatan akhir.
+
+## TAHAP 5 BAGIAN A: frontend dasar ✅
+- **Tanggal:** 2026-11-21
+- **Scaffold:** aplikasi React + Vite + Tailwind CSS 4 dengan font Poppins lokal, design tokens, modul API Axios, dan rute terlindungi.
+- **Halaman:** Login, Kasir, Katalog, Profil, dan kerangka Dashboard. Navigasi memakai sidebar desktop dan bar bawah pada layar kecil.
+- **Alur:** login/logout dan penanganan sesi 401; kasir memilih varian serta menyimpan transaksi; katalog mendukung produk dan varian; profil memuat serta menyimpan data usaha. Ringkasan kesibukan ditampilkan sebagai data turunan hanya-baca dari API.
+- **Pengembangan lokal:** `start-dev.ps1` membuka jendela PowerShell terpisah untuk Laravel `8000`, FastAPI `8001`, dan Vite `5173`.
+- **GATE:** LULUS
+  - `npm run build` dari `frontend/`: sukses.
+  - Browser: login dan rute terlindungi; transaksi kasir tersimpan; produk dibuat, diperbarui, lalu dihapus; varian diperbarui; profil berhasil disimpan.
+  - Alur integrasi diuji pada database khusus `sava_test`; database pengembangan `sava` tidak dipakai untuk transaksi uji.
+  - Navigasi dan kasir diverifikasi pada viewport desktop dan ponsel; evaluasi visual independen desktop/mobile: PASS.
