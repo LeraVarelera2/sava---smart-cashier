@@ -1,41 +1,50 @@
 import { useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2, PackageOpen, X, Check } from 'lucide-react'
-import { api } from '../api'
+import { Plus, Pencil, Trash2, PackageOpen, X } from 'lucide-react'
+import { api, notifyApiError } from '../api'
+import ConfirmDialog from '../components/ConfirmDialog'
+import { useToast } from '../components/ToastProvider'
 
 const rupiah = value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value)
 const blankVariant = () => ({ variant_name: '', pack_size: '', size_label: '', price: '' })
 
 export default function Catalog() {
+  const { showToast } = useToast()
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
   const [editor, setEditor] = useState(null)
+  const [confirmation, setConfirmation] = useState(null)
 
   async function load() {
-    setLoading(true); setError('')
+    setLoading(true)
     try { const data = await api.products(); setProducts(data.data || []) }
-    catch (err) { setError(err.message) }
+    catch (err) { notifyApiError(err, showToast) }
     finally { setLoading(false) }
   }
   useEffect(() => { load() }, [])
 
   async function removeProduct(product) {
-    if (!window.confirm(`Hapus produk "${product.name}"?`)) return
-    try { const data = await api.deleteProduct(product.id); setMessage(data.message || 'Produk dihapus'); await load() }
-    catch (err) { setError(err.message) }
+    setConfirmation({
+      title: `Hapus atau nonaktifkan ${product.name}?`,
+      description: 'Jika produk memiliki riwayat transaksi, produk dan variannya akan dipertahankan tetapi dinonaktifkan. Jika belum pernah terjual, produk akan dihapus.',
+      request: () => api.deleteProduct(product.id),
+    })
   }
   async function removeVariant(variant) {
-    if (!window.confirm(`Hapus varian "${variant.variant_name}"?`)) return
-    try { const data = await api.deleteVariant(variant.id); setMessage(data.message || 'Varian dihapus'); await load() }
-    catch (err) { setError(err.message) }
+    setConfirmation({
+      title: `Hapus atau nonaktifkan ${variant.variant_name}?`,
+      description: 'Jika varian memiliki riwayat transaksi, data akan dipertahankan dan varian dinonaktifkan. Jika belum pernah terjual, varian akan dihapus.',
+      request: () => api.deleteVariant(variant.id),
+    })
+  }
+  async function confirmAction() {
+    const data = await confirmation.request()
+    showToast('success', data.message || 'Perubahan katalog berhasil disimpan.')
+    await load()
   }
 
   return (
     <section>
       <header className="page-header"><div><p className="eyebrow">Inventaris</p><h1>Katalog</h1></div><button className="primary-button" onClick={() => setEditor({ mode: 'create', name: '', variants: [blankVariant()] })}><Plus size={18} /> Tambah produk</button></header>
-      {error && <div className="alert error" role="alert">{error}</div>}
-      {message && <div className="alert success" role="status"><Check size={18} />{message}</div>}
       {loading ? <div className="loading-list"><div className="skeleton" /><div className="skeleton" /></div> :
         products.length ? <div className="catalog-list">
           {products.map(product => (
@@ -59,35 +68,44 @@ export default function Catalog() {
             </article>
           ))}
         </div> : <div className="empty-state"><PackageOpen size={30} /><h3>Belum ada produk</h3><p>Tambahkan produk pertama untuk mulai berjualan.</p></div>}
-      {editor && <ProductEditor editor={editor} onClose={() => setEditor(null)} onSaved={async msg => { setEditor(null); setMessage(msg); await load() }} onError={setError} />}
+      {editor && <ProductEditor editor={editor} onClose={() => setEditor(null)} onSaved={async message => { setEditor(null); showToast('success', message); await load() }} />}
+      {confirmation && <ConfirmDialog
+        title={confirmation.title}
+        description={confirmation.description}
+        actionLabel="Lanjutkan"
+        onCancel={() => setConfirmation(null)}
+        onConfirm={confirmAction}
+        onError={error => notifyApiError(error, showToast)}
+      />}
     </section>
   )
 }
 
-function ProductEditor({ editor, onClose, onSaved, onError }) {
+function ProductEditor({ editor, onClose, onSaved }) {
+  const { showToast } = useToast()
   const [name, setName] = useState(editor.name)
   const [variants, setVariants] = useState(editor.variants.map(v => ({ ...v, price: v.price ?? '' })))
   const [pending, setPending] = useState(false)
   async function save(e) {
     e.preventDefault()
-    setPending(true); onError('')
+    setPending(true)
     try {
       if (editor.mode === 'createVariant') {
         const v = variants[0]
         const data = await api.createVariant(editor.productId, { variant_name: v.variant_name, pack_size: v.pack_size || null, size_label: v.size_label || null, price: Number(v.price) })
-        await onSaved(data.message || 'Varian ditambahkan')
+        await onSaved(data.message || 'Varian berhasil ditambahkan.')
       } else if (editor.mode === 'variant') {
         const v = variants[0]
         const data = await api.updateVariant(editor.id, { variant_name: v.variant_name, pack_size: v.pack_size || null, size_label: v.size_label || null, price: Number(v.price), is_active: v.is_active !== false })
-        await onSaved(data.message || 'Varian diperbarui')
+        await onSaved(v.is_active === false ? 'Varian dinonaktifkan.' : 'Varian berhasil diperbarui.')
       } else if (editor.mode === 'create') {
         const data = await api.createProduct({ name, variants: variants.map(v => ({ variant_name: v.variant_name, pack_size: v.pack_size || null, size_label: v.size_label || null, price: Number(v.price) })) })
-        await onSaved(data.message || 'Produk dibuat')
+        await onSaved(data.message || 'Produk berhasil ditambahkan.')
       } else {
         const data = await api.updateProduct(editor.id, { name })
-        await onSaved(data.message || 'Produk diperbarui')
+        await onSaved(data.message || 'Produk berhasil diperbarui.')
       }
-    } catch (err) { onError(err.data?.errors ? Object.values(err.data.errors).flat().join(' ') : err.message) }
+    } catch (err) { notifyApiError(err, showToast) }
     finally { setPending(false) }
   }
   return (
@@ -103,6 +121,7 @@ function ProductEditor({ editor, onClose, onSaved, onError }) {
               <label>Ukuran kemasan (opsional)<input value={v.pack_size || ''} onChange={e => setVariants(cur => cur.map((x,n) => n === i ? { ...x, pack_size: e.target.value } : x))} /></label>
               <label>Harga<input type="number" min="1" value={v.price} onChange={e => setVariants(cur => cur.map((x,n) => n === i ? { ...x, price: e.target.value } : x))} required /></label>
             </div>
+            {editor.mode === 'variant' && <label className="toggle-field"><input type="checkbox" checked={v.is_active !== false} onChange={e => setVariants(cur => cur.map((x,n) => n === i ? { ...x, is_active: e.target.checked } : x))} /> Varian aktif dan tampil di kasir</label>}
             {editor.mode === 'create' && variants.length > 1 && <button type="button" className="text-button danger" onClick={() => setVariants(cur => cur.filter((_,n) => n !== i))}>Hapus varian</button>}
           </div>
         ))}

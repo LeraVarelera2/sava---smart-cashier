@@ -36,13 +36,21 @@ client.interceptors.response.use(
   error => {
     const status = error.response?.status
     const data = error.response?.data
-    const normalized = new Error(data?.message || error.message || 'Permintaan gagal.')
+    const message = data?.errors
+      ? Object.values(data.errors).flat().join(' ')
+      : data?.message || (typeof data?.detail === 'string' ? data.detail : null)
+        || (error.response ? error.message : 'Tidak dapat terhubung ke server. Periksa koneksi layanan.')
+    const normalized = new Error(message || 'Permintaan gagal.')
     normalized.status = status
     normalized.data = data
 
-    if (status === 401 && !error.config?.url?.endsWith('/login')) {
+    if (status === 401 && !error.config?.url?.endsWith('/login') && !error.config?.skipUnauthorizedHandler) {
       clearSession()
       window.dispatchEvent(new Event('sava:unauthorized'))
+      normalized.toastShown = true
+    } else if (!error.config?.skipGlobalErrorToast) {
+      normalized.toastShown = true
+      window.dispatchEvent(new CustomEvent('sava:api-error', { detail: { message: normalized.message } }))
     }
 
     return Promise.reject(normalized)
@@ -51,7 +59,7 @@ client.interceptors.response.use(
 
 export const api = {
   login: async (email, password) => client.post('/login', { email, password }),
-  logout: async () => client.post('/logout'),
+  logout: async () => client.post('/logout', null, { skipGlobalErrorToast: true, skipUnauthorizedHandler: true }),
   products: async () => client.get('/products'),
   createProduct: async body => client.post('/products', body),
   updateProduct: async (id, body) => client.put(`/products/${id}`, body),
@@ -62,4 +70,16 @@ export const api = {
   createTransaction: async items => client.post('/transactions', { items }),
   getProfile: async () => client.get('/business-profile'),
   updateProfile: async body => client.put('/business-profile', body),
+  dashboardSummary: async params => client.get('/dashboard/summary', { params }),
+  dashboardTrend: async params => client.get('/dashboard/trend', { params }),
+  dashboardTopProducts: async params => client.get('/dashboard/top-products', { params }),
+  dashboardBusyDays: async params => client.get('/dashboard/busy-days', { params }),
+  dashboardBusyHours: async params => client.get('/dashboard/busy-hours', { params }),
+  forecast: async days => client.get('/ml/forecast', { params: { days } }),
+  classification: async () => client.get('/ml/classification'),
+  bundling: async basis => client.get('/ml/bundling', { params: { basis } }),
+}
+
+export function notifyApiError(error, showToast) {
+  if (!error?.toastShown) showToast('error', error?.message || 'Permintaan gagal.')
 }

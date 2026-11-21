@@ -80,3 +80,14 @@
   - Browser: login dan rute terlindungi; transaksi kasir tersimpan; produk dibuat, diperbarui, lalu dihapus; varian diperbarui; profil berhasil disimpan.
   - Alur integrasi diuji pada database khusus `sava_test`; database pengembangan `sava` tidak dipakai untuk transaksi uji.
   - Navigasi dan kasir diverifikasi pada viewport desktop dan ponsel; evaluasi visual independen desktop/mobile: PASS.
+
+## TAHAP 5 BAGIAN B: notifikasi dan dashboard ✅
+- **Tanggal:** 2026-11-21
+- **Langkah 0:** notifikasi aksi dan error API memakai Toast bersama dengan tipe sukses/error/info, batas tiga item, durasi otomatis, tombol tutup aksesibel, dan posisi responsif. Konfirmasi hapus/nonaktifkan katalog memakai modal aplikasi, bukan dialog browser.
+- **Dashboard:** tab Ringkasan, Prediksi, Produk, dan Bundling memuat endpoint API; dilengkapi filter sumber/rentang, grafik aktual/prediksi, metrik klasifikasi dan confusion matrix, aturan pohon, serta jumlah aturan bundling per basis.
+- **Bundling API:** respons menyertakan jumlah pasangan aturan yang ditemukan, selain daftar rekomendasi yang ditampilkan.
+- **GATE:** LULUS
+  - `npm run build`: sukses.
+  - Endpoint ML: health sukses; forecast 30 hari aktual + 7 hari prediksi; klasifikasi 23 varian termasuk 8 yang datanya belum cukup; aturan bundling berjumlah 5 per hari dan 1 per transaksi.
+  - Browser: seluruh tab Dashboard memuat data melalui API; konfirmasi katalog tampil. Pemeriksaan dilakukan dengan Laravel terarah ke `sava_test`; tidak ada data uji ditulis ke `sava`.
+  - Server uji dihentikan setelah pemeriksaan.

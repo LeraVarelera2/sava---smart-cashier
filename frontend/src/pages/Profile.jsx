@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Save, Store, MapPin, Phone, BriefcaseBusiness, LogOut } from 'lucide-react'
-import { api } from '../api'
+import { api, notifyApiError } from '../api'
+import { useToast } from '../components/ToastProvider'
 
 const emptyProfile = { business_name: '', business_type: '', address: '', rt: '', rw: '', kelurahan: '', phone: '', kesibukan: null }
 const profileFields = ['business_name', 'business_type', 'address', 'rt', 'rw', 'kelurahan', 'phone']
@@ -14,36 +15,33 @@ function normalizeProfile(profile = {}) {
 }
 
 export default function Profile({ onLogout }) {
+  const { showToast } = useToast()
   const [form, setForm] = useState(emptyProfile)
   const [loading, setLoading] = useState(true)
   const [pending, setPending] = useState(false)
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
 
   useEffect(() => {
-    api.getProfile().then(data => setForm(normalizeProfile(data.data))).catch(err => setError(err.message)).finally(() => setLoading(false))
+    api.getProfile().then(data => setForm(normalizeProfile(data.data))).catch(err => notifyApiError(err, showToast)).finally(() => setLoading(false))
   }, [])
 
   function change(key, value) { setForm(current => ({ ...current, [key]: value })) }
 
   async function save(e) {
     e.preventDefault()
-    setPending(true); setError(''); setMessage('')
+    setPending(true)
     try {
       const payload = Object.fromEntries(profileFields.map(field => [field, form[field]]))
       const data = await api.updateProfile(payload)
       setForm(current => normalizeProfile({ ...current, ...(data.data || {}), kesibukan: current.kesibukan }))
-      setMessage(data.message || 'Profil berhasil disimpan')
+      showToast('success', data.message || 'Profil berhasil disimpan.')
     } catch (err) {
-      setError(err.data?.errors ? Object.values(err.data.errors).flat().join(' ') : err.message)
+      notifyApiError(err, showToast)
     } finally { setPending(false) }
   }
 
   return (
     <section>
       <header className="page-header"><div><p className="eyebrow">Identitas usaha</p><h1>Profil bisnis</h1></div><button type="button" className="secondary-button mobile-logout" onClick={onLogout}><LogOut size={16} /> Keluar</button></header>
-      {error && <div className="alert error" role="alert">{error}</div>}
-      {message && <div className="alert success" role="status">{message}</div>}
       {loading ? <div className="profile-loading"><div className="skeleton" /><div className="skeleton" /></div> :
         <form className="profile-layout" onSubmit={save}>
           <aside className="profile-summary">

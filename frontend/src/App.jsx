@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Navigate, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, ShoppingBasket, PackageOpen, Store, LogOut } from 'lucide-react'
 import { api, clearSession, getToken, getUser, setSession } from './api'
+import { ToastProvider, useToast } from './components/ToastProvider'
 import Login from './pages/Login'
 import Cashier from './pages/Cashier'
 import Catalog from './pages/Catalog'
@@ -13,29 +14,33 @@ function Protected({ children }) {
 }
 
 export default function App() {
+  return <ToastProvider><AppRoutes /></ToastProvider>
+}
+
+function AppRoutes() {
   const [user, setUser] = useState(getUser())
-  const [notice, setNotice] = useState('')
   const navigate = useNavigate()
+  const { showToast } = useToast()
 
   useEffect(() => {
     function handleUnauthorized() {
       setUser(null)
-      setNotice('Sesi berakhir. Silakan masuk kembali.')
+      showToast('info', 'Sesi berakhir. Silakan masuk kembali.')
       navigate('/login', { replace: true })
     }
 
     window.addEventListener('sava:unauthorized', handleUnauthorized)
     return () => window.removeEventListener('sava:unauthorized', handleUnauthorized)
-  }, [navigate])
+  }, [navigate, showToast])
 
   function handleLogin(token, loggedUser) {
     setSession(token, loggedUser)
     setUser(loggedUser)
-    setNotice('')
+    showToast('success', 'Berhasil masuk.')
     navigate('/kasir')
   }
 
-  async function handleLogout() {
+  const handleLogout = useCallback(async () => {
     let logoutError = null
     try {
       await api.logout()
@@ -44,12 +49,12 @@ export default function App() {
     }
     clearSession()
     setUser(null)
-    setNotice(logoutError ? `Sesi lokal ditutup, tetapi logout server gagal: ${logoutError.message}` : '')
+    showToast(logoutError ? 'error' : 'success', logoutError ? `Sesi lokal ditutup, tetapi logout server gagal: ${logoutError.message}` : 'Anda telah keluar.')
     navigate('/login', { replace: true })
-  }
+  }, [navigate, showToast])
 
   if (!getToken()) {
-    return <Routes><Route path="/login" element={<Login onLogin={handleLogin} notice={notice} />} /><Route path="*" element={<Navigate to="/login" replace />} /></Routes>
+    return <Routes><Route path="/login" element={<Login onLogin={handleLogin} />} /><Route path="*" element={<Navigate to="/login" replace />} /></Routes>
   }
 
   const nav = [

@@ -1,23 +1,23 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Minus, Plus, Search, Trash2, ShoppingCart, CheckCircle2, ReceiptText } from 'lucide-react'
-import { api } from '../api'
+import { Minus, Plus, Search, Trash2, ShoppingCart, ReceiptText } from 'lucide-react'
+import { api, notifyApiError } from '../api'
+import { useToast } from '../components/ToastProvider'
 
 const rupiah = value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value)
 const sizeLabel = variant => variant.size_label || (variant.pack_size ? `${variant.pack_size} pcs` : 'Ukuran standar')
 
 export default function Cashier() {
+  const { showToast } = useToast()
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [pending, setPending] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState(null)
 
   async function load() {
-    setLoading(true); setError('')
+    setLoading(true)
     try { const data = await api.products(); setProducts(data.data || []) }
-    catch (err) { setError(err.message) }
+    catch (err) { notifyApiError(err, showToast) }
     finally { setLoading(false) }
   }
   useEffect(() => { load() }, [])
@@ -29,7 +29,6 @@ export default function Cashier() {
   const total = cart.reduce((sum, item) => sum + Number(item.price) * item.qty, 0)
 
   function add(item) {
-    setSuccess(null)
     setCart(current => {
       const found = current.find(x => x.variant_id === item.id)
       return found ? current.map(x => x.variant_id === item.id ? { ...x, qty: Math.min(x.qty + 1, 999) } : x)
@@ -42,21 +41,19 @@ export default function Cashier() {
 
   async function checkout() {
     if (!cart.length) return
-    setPending(true); setError(''); setSuccess(null)
+    setPending(true)
     try {
       const data = await api.createTransaction(cart.map(({ variant_id, qty }) => ({ variant_id, qty })))
-      setSuccess(data)
+      showToast('success', `Transaksi ${data.data?.code || ''} berhasil disimpan · ${rupiah(data.data?.total_amount || 0)}`)
       setCart([])
     } catch (err) {
-      setError(err.data?.errors ? Object.values(err.data.errors).flat().join(' ') : err.message)
+      notifyApiError(err, showToast)
     } finally { setPending(false) }
   }
 
   return (
     <section>
       <header className="page-header"><div><p className="eyebrow">Penjualan</p><h1>Kasir</h1></div><span className="live-label"><i /> Siap melayani</span></header>
-      {error && <div className="alert error" role="alert">{error}</div>}
-      {success && <div className="alert success" role="status"><CheckCircle2 size={18} /><span>Transaksi <strong>{success.data?.code}</strong> berhasil disimpan · {rupiah(success.data?.total_amount || 0)}</span></div>}
       <div className="cashier-grid">
         <div className="catalog-pane">
           <div className="search-box"><Search size={18} /><input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari produk atau varian..." /></div>

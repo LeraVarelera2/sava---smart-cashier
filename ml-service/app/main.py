@@ -150,7 +150,7 @@ def bundling(
         params={"sources": sources},
     )
     if baskets.empty:
-        return {"basis": basis, "data": [], "message": "Belum ditemukan pola yang kuat."}
+        return {"basis": basis, "rule_count": 0, "data": [], "message": "Belum ditemukan pola yang kuat."}
 
     transaction_lists = (
         baskets.groupby("basket_key")["variant_name"]
@@ -181,7 +181,7 @@ def bundling(
             break
 
     if selected_rules.empty:
-        return {"basis": basis, "data": [], "message": "Belum ditemukan pola yang kuat."}
+        return {"basis": basis, "rule_count": 0, "data": [], "message": "Belum ditemukan pola yang kuat."}
 
     pairs = {}
     for _, row in selected_rules.iterrows():
@@ -198,6 +198,7 @@ def bundling(
         if pair not in pairs or candidate["confidence"] > pairs[pair]["confidence"]:
             pairs[pair] = candidate
 
+    rule_count = len(pairs)
     results = sorted(pairs.values(), key=lambda item: item["lift"], reverse=True)[:8]
     for result in results:
         result["sentence"] = (
@@ -207,6 +208,7 @@ def bundling(
     return {
         "basis": basis,
         "min_support": selected_support,
+        "rule_count": rule_count,
         "data": results,
         "message": None if results else "Belum ditemukan pola yang kuat.",
     }
