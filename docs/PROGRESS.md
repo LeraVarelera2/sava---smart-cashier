@@ -32,11 +32,13 @@
 ## TAHAP 2: Data science cleaning, EDA, dan import ✅
 - **Tanggal:** 2026-11-21
 - **Lingkungan:** virtual environment Python dibuat di `ml-service/.venv`; dependensi dipasang dari `ml-service/requirements.txt`; `pip check` bersih.
-- **Data:** membaca 7 sheet Mei-November, menghasilkan `data/cleaned_historis.csv` berisi 549 baris dan `ml-service/reports/cleaning_report.md`.
+- **Data:** membaca 7 sheet Mei-November, menghasilkan `data/cleaned_historis.csv` berisi 699 baris dan `ml-service/reports/cleaning_report.md`.
 - **EDA:** menghasilkan ringkasan dan 5 grafik PNG di `ml-service/reports/eda/`.
-- **Import:** `HistoricalDataSeeder` membuat varian dan 549 transaksi historis; `SimulationSeeder` membuat 450 transaksi simulasi deterministik untuk 30 hari.
+- **Import:** `HistoricalDataSeeder` membuat varian dan 699 transaksi historis; `SimulationSeeder` membuat 450 transaksi simulasi deterministik untuk 30 hari.
 - **GATE:** LULUS
   - `php artisan migrate:fresh --seed --no-interaction`: sukses
-  - jumlah transaksi historis: 549, sama dengan baris CSV
-  - total historis database: Rp64.060.000, sama dengan jumlah `total_harga` CSV
+  - jumlah transaksi historis: 699, sama dengan baris CSV
+  - total historis database: Rp72.141.000, sama dengan jumlah `total_harga` CSV
   - laporan cleaning dan folder EDA tersedia
+- **Koreksi audit data sebelum Tahap 3:** nomor `No.` pada semua sheet unik dan berurutan; aturan deduplikasi lama sebelumnya membuang 150 baris penjualan yang berbeda nomor. Aturan sudah diperbaiki, 150 baris lama disimpan di `ml-service/reports/dropped_duplicates.csv`, dan semua 699 baris kini dipertahankan. Nama varian turun dari 28 menjadi 26 setelah normalisasi urutan rasa pada Mix; nama lain yang meragukan tetap terpisah di `ml-service/reports/variant_review.md`.
+- **Perbandingan per sheet:** jumlah baris dan total harga Excel cocok dengan CSV dan database untuk Mei-November.

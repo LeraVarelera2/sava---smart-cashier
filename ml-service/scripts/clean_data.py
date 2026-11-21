@@ -8,6 +8,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
 REPORT = ROOT / "ml-service" / "reports" / "cleaning_report.md"
+DROP_REPORT = ROOT / "ml-service" / "reports" / "dropped_duplicates.csv"
+VARIANT_REVIEW = ROOT / "ml-service" / "reports" / "variant_review.md"
 OUTPUT = DATA_DIR / "cleaned_historis.csv"
 
 
@@ -25,8 +27,24 @@ def clean_text(value):
 def parse_money(value):
     if pd.isna(value):
         return None
-    text = re.sub(r"[^\d]", "", str(value))
-    return int(text) if text else None
+    if isinstance(value, (int, float)):
+        return int(round(value))
+
+    text = re.sub(r"(?i)\brp\b", "", str(value)).strip().replace(" ", "")
+    if not text:
+        return None
+    if "," in text and "." in text:
+        decimal_separator = "," if text.rfind(",") > text.rfind(".") else "."
+        thousands_separator = "." if decimal_separator == "," else ","
+        text = text.replace(thousands_separator, "")
+        text = text.split(decimal_separator, 1)[0]
+    elif "," in text:
+        integer, decimal = text.rsplit(",", 1)
+        text = integer.replace(".", "").replace(",", "") if len(decimal) == 3 else integer.replace(".", "")
+    else:
+        text = text.replace(".", "").replace(",", "")
+    digits = re.sub(r"[^\d]", "", text)
+    return int(digits) if digits else None
 
 
 def parse_number(value):
@@ -49,6 +67,41 @@ def parse_date(value):
         return parsed.normalize() if pd.notna(parsed) else None
 
 
+def canonical_mix(variant):
+    match = re.fullmatch(r"(Pisbol|Premium)\s+(.+?)\s+\(Mix\)", variant, flags=re.IGNORECASE)
+    if not match:
+        return variant
+
+    flavors = ["Ubi Ungu", "Coklat", "Keju", "Tape", "Beef"]
+    order = {"Coklat": 0, "Keju": 1, "Tape": 2, "Beef": 3, "Ubi Ungu": 4}
+    remaining = match.group(2).strip()
+    components = []
+    while remaining:
+        remaining = remaining.lstrip()
+        flavor = next(
+            (item for item in flavors if remaining.casefold().startswith(item.casefold())
+             and (len(remaining) == len(item) or remaining[len(item)].isspace())),
+            None,
+        )
+        if flavor is None:
+            return variant
+        components.append(flavor)
+        remaining = remaining[len(flavor):].strip()
+
+    if len(components) != 2 or len(set(components)) != 2:
+        return variant
+    components.sort(key=order.get)
+    return f"{match.group(1).title()} {' '.join(components)} (Mix)"
+
+
+def source_value(value):
+    if pd.isna(value):
+        return None
+    if isinstance(value, pd.Timestamp):
+        return value.isoformat()
+    return str(value)
+
+
 def find_excel():
     files = list(DATA_DIR.glob("*.xlsx")) + list(DATA_DIR.glob("*.xls"))
     if not files:
@@ -64,11 +117,14 @@ def main():
 
     frames = []
     counts = {}
+    source_stats = {}
+    no_checks = {}
     dropped = {"invalid_date": 0, "invalid_qty_or_total": 0, "empty": 0}
     filled_dates = 0
     cleaned_spaces = 0
     merged_variants = 0
     duplicate_rows = 0
+    historical_dropped = []
 
     for sheet in workbook.sheet_names:
         raw = pd.read_excel(excel, sheet_name=sheet, header=None)
@@ -88,27 +144,45 @@ def main():
         frame = pd.read_excel(excel, sheet_name=sheet, header=header_row)
         frame.columns = [snake(column) for column in frame.columns]
 
-        for possible in list(frame.columns):
-            if possible.startswith("no"):
-                frame.drop(columns=[possible], inplace=True)
-
         required = ["tanggal", "nama_produk", "variant"]
         if not all(name in frame.columns for name in required):
             continue
 
+        no_column = next((c for c in frame.columns if c.startswith("no")), None)
         quantity_col = next((c for c in frame.columns if "quantity" in c), None)
         isi_col = next((c for c in frame.columns if "isi" in c), None)
         total_col = next((c for c in frame.columns if "total" in c and "harga" in c), None)
         if not quantity_col or not isi_col or not total_col:
             continue
 
+        if no_column:
+            no_values = [parse_number(value) for value in frame[no_column]]
+            present_no = [value for value in no_values if value is not None]
+            no_checks[sheet] = {
+                "count": len(no_values),
+                "blank": len(no_values) - len(present_no),
+                "unique": len(set(present_no)),
+                "sequential": present_no == list(range(1, len(present_no) + 1)),
+            }
+        else:
+            no_checks[sheet] = {"count": len(frame), "blank": len(frame), "unique": 0, "sequential": False}
+
+        source_stats[sheet] = {
+            "rows": len(frame),
+            "total": sum(parse_money(value) or 0 for value in frame[total_col]),
+        }
+        source_signatures = set()
         for index, row in frame.iterrows():
             if row.isna().all():
                 dropped["empty"] += 1
                 continue
 
-            no_column = next((c for c in frame.columns if c.startswith("no")), None)
             no_urut = parse_number(row[no_column]) if no_column and pd.notna(row[no_column]) else None
+            signature = repr(tuple(source_value(value) for value in row.tolist()))
+            if signature in source_signatures:
+                duplicate_rows += 1
+                continue
+            source_signatures.add(signature)
 
             date_value = parse_date(row["tanggal"])
             if pd.isna(row["tanggal"]) and index > 0:
@@ -140,6 +214,7 @@ def main():
 
             frames.append({
                 "_no_urut": no_urut,
+                "_source_signature": signature,
                 "tanggal": date_value.strftime("%Y-%m-%d"),
                 "nama_produk": name,
                 "variant": variant,
@@ -154,12 +229,6 @@ def main():
         raise RuntimeError("Tidak ada baris valid ditemukan")
 
     cleaned = pd.DataFrame(frames)
-    variant_counts = cleaned["variant"].value_counts()
-
-    normalized = {}
-    for variant in cleaned["variant"].unique():
-        key = re.sub(r"\s+", " ", str(variant).strip()).casefold()
-        normalized.setdefault(key, variant)
     canonical_by_key = {}
     for key, variants in cleaned.assign(_key=cleaned["variant"].map(lambda v: re.sub(r"\s+", " ", str(v).strip()).casefold())).groupby("_key"):
         canonical = variants["variant"].mode().iloc[0]
@@ -171,13 +240,48 @@ def main():
         lambda value: canonical_by_key[re.sub(r"\s+", " ", str(value).strip()).casefold()]
     )
 
-    # Duplicate exact rows are retained unless No. and all cleaned columns are identical.
-    rows_before_duplicate_removal = len(cleaned)
-    cleaned = cleaned.drop_duplicates(
-        subset=["_no_urut", "tanggal", "nama_produk", "variant", "isi_pcs", "quantity", "total_harga", "harga_per_pack", "sheet"],
-        keep="first"
+    # Keep every distinct source row; No. is part of the exact source signature.
+    before_mix_normalization = cleaned.copy()
+    mix_renamed_count = sum(
+        canonical_mix(variant) != variant
+        for variant in before_mix_normalization["variant"].unique()
     )
-    duplicate_rows = rows_before_duplicate_removal - len(cleaned)
+    cleaned["variant"] = cleaned["variant"].map(canonical_mix)
+    duplicate_key = ["tanggal", "nama_produk", "variant", "isi_pcs", "quantity", "total_harga", "harga_per_pack", "sheet"]
+    # Archive rows the previous rule mistakenly dropped because it ignored No.
+    prior_rule_duplicates = before_mix_normalization.duplicated(subset=duplicate_key, keep="first")
+    for _, row in before_mix_normalization.loc[prior_rule_duplicates].iterrows():
+        historical_dropped.append({
+            "sheet": row["sheet"],
+            "No.": row["_no_urut"],
+            "tanggal": row["tanggal"],
+            "varian": row["variant"],
+            "isi": row["isi_pcs"],
+            "quantity": row["quantity"],
+            "total": row["total_harga"],
+        })
+
+    cleaned = cleaned.drop_duplicates(subset=["_source_signature"], keep="first")
+    if historical_dropped:
+        pd.DataFrame(historical_dropped, columns=["sheet", "No.", "tanggal", "varian", "isi", "quantity", "total"]).to_csv(
+            DROP_REPORT, index=False
+        )
+    else:
+        pd.DataFrame(columns=["sheet", "No.", "tanggal", "varian", "isi", "quantity", "total"]).to_csv(
+            DROP_REPORT, index=False
+        )
+
+    sheet_stats = []
+    for sheet in workbook.sheet_names:
+        sheet_data = cleaned[cleaned["sheet"] == sheet]
+        source = source_stats.get(sheet, {"rows": 0, "total": 0})
+        sheet_stats.append({
+            "sheet": sheet,
+            "excel_rows": source["rows"],
+            "cleaned_rows": len(sheet_data),
+            "excel_total": source["total"],
+            "cleaned_total": int(sheet_data["total_harga"].sum()),
+        })
 
     column_order = ["tanggal", "nama_produk", "variant", "isi_pcs", "quantity", "total_harga", "harga_per_pack", "sheet"]
     cleaned = cleaned[column_order]
@@ -202,19 +306,69 @@ def main():
             suggestions.append((variant, close))
 
     REPORT.parent.mkdir(parents=True, exist_ok=True)
+    review_names = {
+        "Pisbol Smoked Beef",
+        "Pisbol Pisang Coklat (Mix)",
+        "Pisbol Ubi Ungu Pisang Keju (Mix)",
+        "Mix Keju",
+        "Bolen Tape Keju",
+        "Premium Mix",
+        "Pisbol Ubi Ungu Keju",
+    }
+    review_rows = []
+    for variant in sorted(review_names.intersection(set(cleaned["variant"]))):
+        subset = cleaned[cleaned["variant"] == variant]
+        review_rows.append(
+            f"| {variant} | {len(subset)} | {', '.join(sorted(subset['sheet'].unique()))} |"
+        )
+    VARIANT_REVIEW.write_text(
+        "\n".join([
+            "# Review Nama Varian",
+            "",
+            "Varian berikut sengaja tidak digabung atau dinormalisasi otomatis; mohon tentukan apakah nama-nama ini valid atau perlu koreksi.",
+            "",
+            "| Varian | Jumlah baris | Sheet |",
+            "|---|---:|---|",
+            *review_rows,
+        ]),
+        encoding="utf-8",
+    )
+
     lines = [
         "# Laporan Cleaning Data Historis",
         "",
         f"- File sumber: `{excel.name}`",
         f"- Baris awal per sheet: {counts}",
         f"- Baris valid akhir: {len(cleaned)}",
+        "",
+        "## Perbandingan baris dan total harga per sheet",
+        "",
+        "| Sheet | Baris Excel | Baris CSV | Total Excel | Total CSV |",
+        "|---|---:|---:|---:|---:|",
+        *[
+            f"| {item['sheet']} | {item['excel_rows']} | {item['cleaned_rows']} | Rp{item['excel_total']:,} | Rp{item['cleaned_total']:,} |"
+            for item in sheet_stats
+        ],
+        f"| **Total** | **{sum(item['excel_rows'] for item in sheet_stats)}** | **{sum(item['cleaned_rows'] for item in sheet_stats)}** | **Rp{sum(item['excel_total'] for item in sheet_stats):,}** | **Rp{sum(item['cleaned_total'] for item in sheet_stats):,}** |",
+        "",
+        "## Pemeriksaan nomor urut No.",
+        "",
+        "| Sheet | Baris bernomor | Kosong | Nomor unik | Berurutan 1..n |",
+        "|---|---:|---:|---:|---|",
+        *[
+            f"| {sheet} | {item['count']} | {item['blank']} | {item['unique']} | {'Ya' if item['sequential'] else 'Tidak'} |"
+            for sheet, item in no_checks.items()
+        ],
+        "",
         f"- Baris dibuang - tanggal tidak valid: {dropped['invalid_date']}",
         f"- Baris dibuang - quantity/total tidak valid: {dropped['invalid_qty_or_total']}",
         f"- Baris dibuang - teks/kosong: {dropped['empty']}",
-        f"- Baris dibuang - duplikat persis dengan nomor urut sama: {duplicate_rows}",
+        f"- Baris dibuang - salinan sumber yang benar-benar identik (termasuk No.): {duplicate_rows}",
+        f"- Baris yang aturan deduplikasi lama keliru buang (disimpan di `{DROP_REPORT.relative_to(ROOT)}`): {len(historical_dropped)}; seluruhnya dipertahankan pada CSV baru.",
         f"- Tanggal diisi dari baris sebelumnya: {filled_dates}",
         f"- Perbaikan spasi: {cleaned_spaces}",
         f"- Varian digabung karena beda kapital/spasi: {merged_variants}",
+        f"- Nama varian Mix yang urutan rasanya dinormalisasi: {mix_renamed_count}",
         f"- Rentang tanggal akhir: {cleaned['tanggal'].min()} sampai {cleaned['tanggal'].max()}",
         "",
         "## Daftar varian akhir",
@@ -236,6 +390,7 @@ def main():
     lines.extend(["", "## Bukti tahapan", "", "- Gathering: inspeksi seluruh sheet dan header.", "- Assessing: tipe, nilai kosong, duplikasi, dan anomali harga.", "- Cleaning: parsing tanggal/uang/angka, normalisasi teks, dan penyimpanan CSV bersih."])
 
     REPORT.write_text("\n".join(lines), encoding="utf-8")
+    print(f"Prior-rule duplicate rows archived: {len(historical_dropped)}")
     print(f"\nCleaned rows: {len(cleaned)}")
     print(f"Output: {OUTPUT}")
     print(f"Report: {REPORT}")

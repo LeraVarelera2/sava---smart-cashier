@@ -1,26 +1,26 @@
 # Ringkasan EDA
 
 ## Statistik deskriptif quantity
-- Mean: 4.71
+- Mean: 4.10
 - Median: 2.00
-- Std: 8.75
+- Std: 7.86
 - Min: 1.00
 - Max: 100.00
 
 ## Statistik deskriptif total harga
-- Mean: 116684.88
+- Mean: 103206.01
 - Median: 60000.00
-- Std: 169661.90
+- Std: 153277.97
 - Min: 12000.00
 - Max: 1800000.00
 
-- Jumlah varian: 28
+- Jumlah varian: 26
 
 ## Total omzet per bulan
-- 2026-05: Rp876,000
-- 2026-06: Rp14,711,000
-- 2026-07: Rp11,815,000
-- 2026-08: Rp11,193,000
-- 2026-09: Rp12,158,000
-- 2026-10: Rp9,152,000
-- 2026-11: Rp4,155,000
+- 2026-05: Rp1,104,000
+- 2026-06: Rp16,372,000
+- 2026-07: Rp13,333,000
+- 2026-08: Rp11,733,000
+- 2026-09: Rp14,882,000
+- 2026-10: Rp9,812,000
+- 2026-11: Rp4,905,000

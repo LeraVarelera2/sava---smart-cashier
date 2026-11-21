@@ -3,11 +3,16 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-05-29,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,Mei
 2026-05-29,Pisang Bolen,Pisbol Coklat,6,5,90000,18000,Mei
 2026-05-29,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Mei
+2026-05-29,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Mei
+2026-05-29,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Mei
+2026-05-29,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Mei
 2026-05-29,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Mei
+2026-05-29,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Mei
+2026-05-29,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,Mei
 2026-05-29,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Mei
 2026-05-30,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,Mei
-2026-05-30,Pisang Bolen,Pisbol Tape Coklat (Mix),10,2,60000,30000,Mei
-2026-05-30,Pisang Bolen,Pisbol Tape Coklat (Mix),6,6,108000,18000,Mei
+2026-05-30,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Mei
+2026-05-30,Pisang Bolen,Pisbol Coklat Tape (Mix),6,6,108000,18000,Mei
 2026-05-30,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Mei
 2026-05-30,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Mei
 2026-06-01,Pisang Bolen,Pisbol Coklat,10,10,300000,30000,Juni
@@ -21,19 +26,25 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-06-03,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
 2026-06-03,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Juni
 2026-06-03,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
+2026-06-03,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
 2026-06-05,Pisang Bolen,Pisbol Coklat,10,9,270000,30000,Juni
 2026-06-05,Pisang Bolen,Pisbol Keju,10,1,30000,30000,Juni
 2026-06-05,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juni
 2026-06-05,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
+2026-06-05,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
 2026-06-05,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
+2026-06-05,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
 2026-06-06,Pisang Bolen,Pisbol Keju,10,1,30000,30000,Juni
-2026-06-06,Pisang Bolen,Pisbol Keju Coklat (Mix),10,2,60000,30000,Juni
+2026-06-06,Pisang Bolen,Pisbol Coklat Keju (Mix),10,2,60000,30000,Juni
 2026-06-06,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juni
+2026-06-06,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
+2026-06-06,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
 2026-06-06,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
 2026-06-08,Pisang Bolen,Pisbol Coklat,10,10,300000,30000,Juni
 2026-06-08,Pisang Bolen,Bolen Tape Keju,10,2,60000,30000,Juni
 2026-06-08,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
 2026-06-08,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,Juni
+2026-06-08,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
 2026-06-08,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
 2026-06-08,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,Juni
 2026-06-09,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
@@ -42,11 +53,13 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-06-10,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,Juni
 2026-06-10,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juni
 2026-06-10,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,Juni
-2026-06-10,Pisang Bolen,Pisbol Keju Coklat (Mix),10,1,30000,30000,Juni
+2026-06-10,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juni
 2026-06-10,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
 2026-06-11,Pisang Bolen,Pisbol Coklat,10,11,330000,30000,Juni
 2026-06-11,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
+2026-06-11,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
 2026-06-11,Pisang Bolen,Pisbol Coklat,6,5,90000,18000,Juni
+2026-06-11,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
 2026-06-12,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Juni
 2026-06-12,Pisang Bolen,Pisbol Coklat,6,7,126000,18000,Juni
 2026-06-12,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,Juni
@@ -56,90 +69,107 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-06-13,Pisang Bolen,Pisbol Coklat,6,30,540000,18000,Juni
 2026-06-13,Pisang Bolen,Pisbol Coklat,6,5,90000,18000,Juni
 2026-06-13,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
+2026-06-13,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
 2026-06-15,Pisang Bolen,Pisbol Coklat,6,60,1080000,18000,Juni
 2026-06-17,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
 2026-06-17,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Juni
+2026-06-17,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Juni
 2026-06-17,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,Juni
 2026-06-17,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juni
-2026-06-17,Pisang Bolen,Pisbol Keju Coklat (Mix),10,2,60000,30000,Juni
+2026-06-17,Pisang Bolen,Pisbol Coklat Keju (Mix),10,2,60000,30000,Juni
 2026-06-17,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
+2026-06-17,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
+2026-06-17,Pisang Bolen,Pisbol Coklat,10,6,180000,30000,Juni
+2026-06-17,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juni
+2026-06-17,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
 2026-06-17,Pisang Bolen,Pisbol Coklat,10,6,180000,30000,Juni
 2026-06-18,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Juni
-2026-06-18,Pisang Bolen,Pisbol Keju Coklat (Mix),10,5,150000,30000,Juni
+2026-06-18,Pisang Bolen,Pisbol Coklat Keju (Mix),10,5,150000,30000,Juni
 2026-06-18,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
 2026-06-18,Pisang Bolen,Pisbol Coklat,10,11,330000,30000,Juni
 2026-06-18,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
+2026-06-18,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
+2026-06-18,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
+2026-06-18,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
+2026-06-18,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
 2026-06-19,Pisang Bolen,Pisbol Coklat,10,8,240000,30000,Juni
-2026-06-19,Pisang Bolen,Pisbol Keju Coklat (Mix),10,2,60000,30000,Juni
+2026-06-19,Pisang Bolen,Pisbol Coklat Keju (Mix),10,2,60000,30000,Juni
 2026-06-19,Pisang Bolen,Pisbol Coklat,6,4,72000,18000,Juni
 2026-06-19,Pisang Bolen,Pisbol Coklat Tape (Mix),10,1,30000,30000,Juni
 2026-06-19,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
-2026-06-19,Pisang Bolen,Pisbol Keju Coklat (Mix),10,1,30000,30000,Juni
+2026-06-19,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juni
 2026-06-19,Pisang Bolen,Pisbol Coklat Tape (Mix),10,5,150000,30000,Juni
 2026-06-19,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juni
-2026-06-19,Pisang Bolen,Pisbol Keju Coklat (Mix),6,2,36000,18000,Juni
+2026-06-19,Pisang Bolen,Pisbol Coklat Keju (Mix),6,2,36000,18000,Juni
 2026-06-19,Pisang Bolen,Pisbol Coklat Tape (Mix),10,4,120000,30000,Juni
 2026-06-19,Pisang Bolen,Pisbol Coklat,6,8,144000,18000,Juni
-2026-06-19,Pisang Bolen,Pisbol Keju Coklat (Mix),10,3,90000,30000,Juni
+2026-06-19,Pisang Bolen,Pisbol Coklat Keju (Mix),10,3,90000,30000,Juni
 2026-06-20,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juni
-2026-06-20,Pisang Bolen,Pisbol Keju Coklat (Mix),10,4,120000,30000,Juni
+2026-06-20,Pisang Bolen,Pisbol Coklat Keju (Mix),10,4,120000,30000,Juni
 2026-06-20,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Juni
 2026-06-20,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
-2026-06-20,Pisang Bolen,Pisbol Keju Coklat (Mix),10,2,60000,30000,Juni
+2026-06-20,Pisang Bolen,Pisbol Coklat Keju (Mix),10,2,60000,30000,Juni
 2026-06-20,Pisang Bolen,Pisbol Coklat Tape (Mix),10,3,90000,30000,Juni
 2026-06-20,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
-2026-06-20,Pisang Bolen,Pisbol Keju Coklat (Mix),10,5,150000,30000,Juni
+2026-06-20,Pisang Bolen,Pisbol Coklat Keju (Mix),10,5,150000,30000,Juni
+2026-06-20,Pisang Bolen,Pisbol Coklat Tape (Mix),10,3,90000,30000,Juni
 2026-06-22,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
-2026-06-22,Pisang Bolen,Pisbol Keju Coklat (Mix),10,5,150000,30000,Juni
+2026-06-22,Pisang Bolen,Pisbol Coklat Keju (Mix),10,5,150000,30000,Juni
 2026-06-22,Pisang Bolen,Pisbol Coklat Tape (Mix),10,4,120000,30000,Juni
 2026-06-22,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
-2026-06-22,Pisang Bolen,Pisbol Keju Coklat (Mix),10,2,60000,30000,Juni
+2026-06-22,Pisang Bolen,Pisbol Coklat Keju (Mix),10,2,60000,30000,Juni
 2026-06-22,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
-2026-06-23,Pisang Bolen,Pisbol Keju Coklat (Mix),10,3,90000,30000,Juni
-2026-06-23,Pisang Bolen,Pisbol Keju Coklat (Mix),6,2,36000,18000,Juni
+2026-06-23,Pisang Bolen,Pisbol Coklat Keju (Mix),10,3,90000,30000,Juni
+2026-06-23,Pisang Bolen,Pisbol Coklat Keju (Mix),6,2,36000,18000,Juni
+2026-06-23,Pisang Bolen,Pisbol Coklat Keju (Mix),6,2,36000,18000,Juni
 2026-06-24,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
 2026-06-25,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
-2026-06-25,Pisang Bolen,Pisbol Keju Coklat (Mix),10,3,90000,30000,Juni
+2026-06-25,Pisang Bolen,Pisbol Coklat Keju (Mix),10,3,90000,30000,Juni
 2026-06-25,Pisang Bolen,Pisbol Keju,6,1,18000,18000,Juni
-2026-06-25,Pisang Bolen,Pisbol Keju Coklat (Mix),6,1,18000,18000,Juni
+2026-06-25,Pisang Bolen,Pisbol Coklat Keju (Mix),6,1,18000,18000,Juni
 2026-06-25,Pisang Bolen,Pisbol Coklat Tape (Mix),10,1,30000,30000,Juni
 2026-06-25,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,Juni
 2026-06-25,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
-2026-06-25,Pisang Bolen,Pisbol Keju Coklat (Mix),10,1,30000,30000,Juni
+2026-06-25,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juni
+2026-06-25,Pisang Bolen,Pisbol Coklat Tape (Mix),10,1,30000,30000,Juni
 2026-06-25,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
-2026-06-25,Pisang Bolen,Pisbol Keju Coklat (Mix),10,4,120000,30000,Juni
+2026-06-25,Pisang Bolen,Pisbol Coklat Keju (Mix),10,4,120000,30000,Juni
 2026-06-26,Pisang Bolen,Pisbol Coklat,6,40,720000,18000,Juni
-2026-06-26,Pisang Bolen,Pisbol Keju Coklat (Mix),10,1,30000,30000,Juni
+2026-06-26,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juni
 2026-06-26,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
 2026-06-26,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Juni
 2026-06-26,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juni
-2026-06-26,Pisang Bolen,Pisbol Keju Coklat (Mix),10,2,60000,30000,Juni
+2026-06-26,Pisang Bolen,Pisbol Coklat Keju (Mix),10,2,60000,30000,Juni
 2026-06-26,Pisang Bolen,Pisbol Coklat,10,7,210000,30000,Juni
 2026-06-26,Pisang Bolen,Pisbol Coklat Tape (Mix),10,4,120000,30000,Juni
 2026-06-27,Pisang Bolen,Pisbol Coklat,10,7,210000,30000,Juni
-2026-06-27,Pisang Bolen,Pisbol Keju Coklat (Mix),10,5,150000,30000,Juni
+2026-06-27,Pisang Bolen,Pisbol Coklat Keju (Mix),10,5,150000,30000,Juni
 2026-06-27,Pisang Bolen,Pisbol Coklat Tape (Mix),10,1,30000,30000,Juni
 2026-06-27,Pisang Bolen,Pisbol Keju,6,1,18000,18000,Juni
 2026-06-27,Pisang Bolen,Pisbol Coklat,6,40,720000,18000,Juni
-2026-06-27,Pisang Bolen,Pisbol Keju Coklat (Mix),10,10,300000,30000,Juni
+2026-06-27,Pisang Bolen,Pisbol Coklat Keju (Mix),10,10,300000,30000,Juni
 2026-06-27,Pisang Bolen,Pisbol Coklat,10,8,240000,30000,Juni
 2026-06-29,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juni
 2026-06-29,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,Juni
 2026-06-29,Pisang Bolen,Bolen Tape Keju,6,1,18000,18000,Juni
-2026-06-29,Pisang Bolen,Pisbol Keju Coklat (Mix),10,3,90000,30000,Juni
+2026-06-29,Pisang Bolen,Pisbol Coklat Keju (Mix),10,3,90000,30000,Juni
 2026-06-29,Pisang Bolen,Premium Coklat,8,1,35000,35000,Juni
-2026-06-29,Pisang Bolen,Pisbol Keju Coklat (Mix),10,1,30000,30000,Juni
+2026-06-29,Pisang Bolen,Premium Coklat,8,1,35000,35000,Juni
+2026-06-29,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juni
 2026-06-29,Pisang Bolen,Pisbol Keju,10,1,30000,30000,Juni
 2026-06-29,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juni
 2026-06-29,Pisang Bolen,Pisbol Coklat Tape (Mix),10,4,120000,30000,Juni
 2026-06-30,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,Juni
-2026-06-30,Pisang Bolen,Pisbol Keju Coklat (Mix),6,10,180000,18000,Juni
+2026-06-30,Pisang Bolen,Pisbol Coklat Keju (Mix),6,10,180000,18000,Juni
 2026-06-30,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juni
-2026-06-30,Pisang Bolen,Pisbol Keju Coklat (Mix),10,1,30000,30000,Juni
+2026-06-30,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juni
 2026-06-30,Pisang Bolen,Bolen Tape Keju,6,2,36000,18000,Juni
 2026-06-30,Pisang Bolen,Pisbol Keju,10,2,60000,30000,Juni
+2026-06-30,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juni
+2026-06-30,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,Juni
 2026-07-01,Pisang Bolen,Pisbol Keju,10,2,60000,30000,Juli
 2026-07-01,Pisang Bolen,Pisbol Keju,10,1,30000,30000,Juli
+2026-07-01,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juli
 2026-07-01,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juli
 2026-07-01,Pisang Bolen,Bolen Tape Keju,6,2,36000,18000,Juli
 2026-07-02,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Juli
@@ -147,10 +177,14 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-07-02,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-02,Pisang Bolen,Pisbol Keju,10,2,60000,30000,Juli
 2026-07-02,Pisang Bolen,Pisbol Keju Tape (Mix),10,3,90000,30000,Juli
+2026-07-02,Pisang Bolen,Pisbol Keju,10,2,60000,30000,Juli
 2026-07-03,Pisang Bolen,Pisbol Coklat,10,25,750000,30000,Juli
 2026-07-03,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Juli
+2026-07-03,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Juli
 2026-07-03,Pisang Bolen,Bolen Tape Keju,6,1,18000,18000,Juli
+2026-07-03,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Juli
 2026-07-03,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,Juli
+2026-07-03,Pisang Bolen,Bolen Tape Keju,6,1,18000,18000,Juli
 2026-07-04,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Juli
 2026-07-04,Pisang Bolen,Pisbol Coklat,6,5,90000,18000,Juli
 2026-07-04,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juli
@@ -161,7 +195,9 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-07-06,Pisang Bolen,Pisbol Keju,6,2,36000,18000,Juli
 2026-07-06,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-06,Pisang Bolen,Bolen Tape Keju,6,1,18000,18000,Juli
+2026-07-06,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juli
 2026-07-06,Pisang Bolen,Bolen Tape Keju,10,1,30000,30000,Juli
+2026-07-06,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-06,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,Juli
 2026-07-06,Pisang Bolen,Pisbol Keju Tape (Mix),6,2,36000,18000,Juli
 2026-07-06,Pisang Bolen,Pisbol Keju,10,2,60000,30000,Juli
@@ -169,11 +205,17 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-07-06,Pisang Bolen,Pisbol Coklat,6,60,1080000,18000,Juli
 2026-07-06,Pisang Bolen,Pisbol Keju Tape (Mix),10,6,180000,30000,Juli
 2026-07-06,Pisang Bolen,Pisbol Keju Tape (Mix),10,3,90000,30000,Juli
+2026-07-06,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juli
 2026-07-06,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,Juli
+2026-07-06,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
+2026-07-06,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
+2026-07-06,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
 2026-07-07,Pisang Bolen,Pisbol Coklat,10,6,180000,30000,Juli
 2026-07-07,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juli
 2026-07-07,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
 2026-07-07,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juli
+2026-07-07,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Juli
+2026-07-07,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
 2026-07-08,Pisang Bolen,Pisbol Coklat,6,6,108000,18000,Juli
 2026-07-10,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Juli
 2026-07-10,Pisang Bolen,Premium,8,4,140000,35000,Juli
@@ -189,8 +231,11 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-07-15,Pisang Bolen,Premium Mix Tape Keju,8,1,35000,35000,Juli
 2026-07-15,Pisang Bolen,Bolen Tape Keju,10,1,30000,30000,Juli
 2026-07-15,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
+2026-07-15,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-15,Pisang Bolen,Bolen Tape Keju,10,2,60000,30000,Juli
 2026-07-15,Pisang Bolen,Pisbol Keju,10,3,90000,30000,Juli
+2026-07-15,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
+2026-07-15,Pisang Bolen,Bolen Tape Keju,10,1,30000,30000,Juli
 2026-07-15,Pisang Bolen,Pisbol Keju Tape (Mix),10,10,300000,30000,Juli
 2026-07-15,Pisang Bolen,Pisbol Coklat,6,15,270000,18000,Juli
 2026-07-16,Pisang Bolen,Pisbol Coklat,10,20,600000,30000,Juli
@@ -204,24 +249,33 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-07-17,Pisang Bolen,Premium Keju,8,4,140000,35000,Juli
 2026-07-17,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-17,Pisang Bolen,Pisbol Keju Tape (Mix),10,4,120000,30000,Juli
+2026-07-17,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-18,Pisang Bolen,Pisbol Keju Tape (Mix),10,12,360000,30000,Juli
 2026-07-18,Pisang Bolen,Pisbol Keju Tape (Mix),10,5,150000,30000,Juli
 2026-07-18,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
 2026-07-18,Pisang Bolen,Bolen Tape Keju,10,1,30000,30000,Juli
 2026-07-18,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
+2026-07-18,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-18,Pisang Bolen,Pisbol Keju Tape (Mix),10,3,90000,30000,Juli
 2026-07-18,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juli
+2026-07-18,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,4,120000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,Juli
 2026-07-24,Pisang Bolen,Bolen Tape Keju,10,4,120000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
+2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,4,120000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Keju,10,1,30000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,3,90000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),6,14,252000,18000,Juli
+2026-07-24,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Keju,10,3,90000,30000,Juli
+2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,3,90000,30000,Juli
 2026-07-24,Pisang Bolen,Bolen Tape Keju,10,2,60000,30000,Juli
+2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juli
+2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,2,60000,30000,Juli
+2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Juli
 2026-07-24,Pisang Bolen,Pisbol Keju Tape (Mix),10,2,60000,30000,Juli
 2026-07-25,Pisang Bolen,Pisbol Coklat,10,10,300000,30000,Juli
 2026-07-25,Pisang Bolen,Pisbol Coklat,50,1,150000,150000,Juli
@@ -232,15 +286,19 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-07-25,Pisang Bolen,Pisbol Keju,10,2,60000,30000,Juli
 2026-07-25,Pisang Bolen,Pisbol Keju Tape (Mix),6,5,90000,18000,Juli
 2026-07-25,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juli
+2026-07-25,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
+2026-07-25,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
+2026-07-25,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Juli
+2026-07-25,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Juli
 2026-07-31,Pisang Bolen,Pisbol Coklat,6,7,126000,18000,Juli
 2026-07-31,Pisang Bolen,Pisbol Keju Tape (Mix),10,5,150000,30000,Juli
 2026-07-31,Pisang Bolen,Pisbol Keju,10,1,30000,30000,Juli
 2026-07-31,Pisang Bolen,Pisbol Coklat Keju (Mix),10,1,30000,30000,Juli
 2026-07-31,Pisang Bolen,Pisbol Keju Tape (Mix),6,1,18000,18000,Juli
 2026-07-31,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,Juli
-2026-08-01,Pisang Bolen,Pisbol Keju Coklat (Mix),10,2,60000,30000,Agustus
-2026-08-01,Pisang Bolen,Pisbol Keju Coklat (Mix),6,1,18000,18000,Agustus
-2026-08-01,Pisang Bolen,Pisbol Keju Coklat (Mix),10,7,210000,30000,Agustus
+2026-08-01,Pisang Bolen,Pisbol Coklat Keju (Mix),10,2,60000,30000,Agustus
+2026-08-01,Pisang Bolen,Pisbol Coklat Keju (Mix),6,1,18000,18000,Agustus
+2026-08-01,Pisang Bolen,Pisbol Coklat Keju (Mix),10,7,210000,30000,Agustus
 2026-08-01,Pisang Bolen,Pisbol Coklat,6,15,270000,18000,Agustus
 2026-08-05,Pisang Bolen,Pisbol Coklat,30,1,90000,90000,Agustus
 2026-08-05,Pisang Bolen,Pisbol Keju,6,2,36000,18000,Agustus
@@ -250,6 +308,7 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-08-05,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Agustus
 2026-08-05,Pisang Bolen,Pisbol Tape,6,1,18000,18000,Agustus
 2026-08-05,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Agustus
+2026-08-05,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Agustus
 2026-08-06,Pisang Bolen,Pisbol Coklat,4,33,396000,12000,Agustus
 2026-08-06,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Agustus
 2026-08-06,Pisang Bolen,Premium Keju Tape (Mix),8,1,35000,35000,Agustus
@@ -258,6 +317,7 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-08-06,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Agustus
 2026-08-06,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Agustus
 2026-08-06,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,Agustus
+2026-08-06,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,Agustus
 2026-08-06,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Agustus
 2026-08-06,Pisang Bolen,Pisbol Keju Tape (Mix),10,2,60000,30000,Agustus
 2026-08-07,Pisang Bolen,Pisbol Coklat,10,8,240000,30000,Agustus
@@ -270,7 +330,7 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-08-07,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Agustus
 2026-08-07,Pisang Bolen,Pisbol Keju Tape (Mix),10,2,60000,30000,Agustus
 2026-08-07,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Agustus
-2026-08-08,Pisang Bolen,Premium Keju Coklat (Mix),8,1,35000,35000,Agustus
+2026-08-08,Pisang Bolen,Premium Coklat Keju (Mix),8,1,35000,35000,Agustus
 2026-08-08,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Agustus
 2026-08-08,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Agustus
 2026-08-08,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Agustus
@@ -286,6 +346,7 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-08-13,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,Agustus
 2026-08-13,Pisang Bolen,Pisbol Coklat Tape (Mix),10,2,60000,30000,Agustus
 2026-08-13,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,Agustus
+2026-08-13,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Agustus
 2026-08-14,Pisang Bolen,Pisbol Coklat,10,7,210000,30000,Agustus
 2026-08-14,Pisang Bolen,Pisbol Coklat,10,15,450000,30000,Agustus
 2026-08-14,Pisang Bolen,Pisbol Keju Tape (Mix),10,2,60000,30000,Agustus
@@ -310,10 +371,12 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-08-22,Pisang Bolen,Pisbol Coklat,10,6,180000,30000,Agustus
 2026-08-22,Pisang Bolen,Pisbol Coklat,6,5,90000,18000,Agustus
 2026-08-22,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,Agustus
-2026-08-22,Pisang Bolen,Pisbol Keju Coklat (Mix),6,8,144000,18000,Agustus
+2026-08-22,Pisang Bolen,Pisbol Coklat Keju (Mix),6,8,144000,18000,Agustus
 2026-08-22,Pisang Bolen,Pisbol Tape,6,2,36000,18000,Agustus
 2026-08-22,Pisang Bolen,Pisbol Tape,6,7,126000,18000,Agustus
 2026-08-22,Pisang Bolen,Pisbol Keju Tape (Mix),10,3,90000,30000,Agustus
+2026-08-22,Pisang Bolen,Pisbol Coklat Keju (Mix),6,8,144000,18000,Agustus
+2026-08-22,Pisang Bolen,Pisbol Tape,6,2,36000,18000,Agustus
 2026-08-22,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Agustus
 2026-08-25,Pisang Bolen,Pisbol Coklat,90,1,270000,270000,Agustus
 2026-08-26,Pisang Bolen,Pisbol Coklat,90,1,270000,270000,Agustus
@@ -321,8 +384,10 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-08-27,Pisang Bolen,Pisbol Keju Tape (Mix),6,5,90000,18000,Agustus
 2026-08-27,Pisang Bolen,Pisbol Keju,10,3,90000,30000,Agustus
 2026-08-27,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Agustus
+2026-08-27,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Agustus
 2026-08-27,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Agustus
 2026-08-27,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Agustus
+2026-08-27,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Agustus
 2026-08-28,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Agustus
 2026-08-28,Pisang Bolen,Pisbol Coklat,6,5,90000,18000,Agustus
 2026-08-28,Pisang Bolen,Pisbol Coklat,10,6,180000,30000,Agustus
@@ -338,20 +403,40 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-09-03,Pisang Bolen,Pisbol Keju Tape (Mix),10,2,60000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Tape,10,2,60000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Keju,10,2,60000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Coklat,10,6,180000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,September
 2026-09-03,Pisang Bolen,Pisbol Tape,10,1,30000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-03,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,September
+2026-09-03,Pisang Bolen,Pisbol Tape,10,1,30000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,September
+2026-09-03,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Keju Tape (Mix),10,2,60000,30000,September
+2026-09-03,Pisang Bolen,Pisbol Keju,10,2,60000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-04,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-04,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-04,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,September
 2026-09-04,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-04,Pisang Bolen,Pisbol Coklat,10,8,240000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
 2026-09-04,Pisang Bolen,Pisbol Keju,10,1,30000,30000,September
+2026-09-04,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-04,Pisang Bolen,Pisbol Tape,6,1,18000,18000,September
 2026-09-05,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-05,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,September
@@ -367,6 +452,10 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-09-09,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-10,Pisang Bolen,Pisbol Keju Tape (Mix),6,1,18000,18000,September
 2026-09-10,Pisang Bolen,Pisbol Tape,10,1,30000,30000,September
+2026-09-10,Pisang Bolen,Pisbol Keju Tape (Mix),6,1,18000,18000,September
+2026-09-10,Pisang Bolen,Pisbol Tape,10,1,30000,30000,September
+2026-09-10,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-10,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,September
 2026-09-10,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-10,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,September
 2026-09-11,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,September
@@ -374,13 +463,17 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-09-11,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-11,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-11,Pisang Bolen,Pisbol Coklat,6,2,36000,18000,September
+2026-09-11,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-11,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-11,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
 2026-09-11,Pisang Bolen,Pisbol Coklat,10,7,210000,30000,September
 2026-09-12,Pisang Bolen,Pisbol Coklat,4,3,36000,12000,September
 2026-09-15,Pisang Bolen,Pisbol Keju Tape (Mix),10,4,120000,30000,September
 2026-09-15,Pisang Bolen,Pisbol Keju Tape (Mix),10,6,180000,30000,September
 2026-09-15,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-15,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-16,Pisang Bolen,Pisbol Coklat Tape (Mix),10,8,240000,30000,September
+2026-09-16,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,September
 2026-09-16,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,September
 2026-09-16,Pisang Bolen,Premium Mix,8,3,105000,35000,September
 2026-09-16,Pisang Bolen,Pisbol Tape,10,2,60000,30000,September
@@ -391,8 +484,9 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-09-21,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,September
 2026-09-21,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-21,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
+2026-09-21,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-22,Pisang Bolen,Pisbol Coklat Tape (Mix),10,5,150000,30000,September
-2026-09-22,Pisang Bolen,Pisbol Keju Coklat (Mix),10,4,120000,30000,September
+2026-09-22,Pisang Bolen,Pisbol Coklat Keju (Mix),10,4,120000,30000,September
 2026-09-22,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
 2026-09-22,Pisang Bolen,Pisbol Keju Tape (Mix),10,2,60000,30000,September
 2026-09-23,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
@@ -401,8 +495,14 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-09-23,Pisang Bolen,Pisbol Coklat,6,5,90000,18000,September
 2026-09-23,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
 2026-09-23,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-23,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-23,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
+2026-09-23,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-23,Pisang Bolen,Pisbol Coklat,10,10,300000,30000,September
 2026-09-23,Pisang Bolen,Pisbol Keju Tape (Mix),10,4,120000,30000,September
+2026-09-23,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-24,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
+2026-09-24,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,September
 2026-09-24,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
 2026-09-24,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,September
 2026-09-24,Pisang Bolen,Pisbol Tape,6,3,54000,18000,September
@@ -413,28 +513,41 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-09-24,Pisang Bolen,Pisbol Coklat,10,11,330000,30000,September
 2026-09-24,Pisang Bolen,Pisbol Keju Tape (Mix),4,7,84000,12000,September
 2026-09-24,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,September
+2026-09-24,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,September
+2026-09-24,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
 2026-09-24,Pisang Bolen,Pisbol Keju,6,1,18000,18000,September
 2026-09-24,Pisang Bolen,Pisbol Keju,6,4,72000,18000,September
+2026-09-24,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,September
 2026-09-25,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
 2026-09-25,Pisang Bolen,Pisbol Coklat,10,6,180000,30000,September
-2026-09-25,Pisang Bolen,Pisbol Keju Coklat (Mix),10,2,60000,30000,September
+2026-09-25,Pisang Bolen,Pisbol Coklat Keju (Mix),10,2,60000,30000,September
 2026-09-25,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,September
 2026-09-25,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
-2026-09-25,Pisang Bolen,Pisbol Keju Coklat (Mix),6,1,18000,18000,September
+2026-09-25,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
+2026-09-25,Pisang Bolen,Pisbol Coklat Keju (Mix),6,1,18000,18000,September
 2026-09-25,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
-2026-09-25,Pisang Bolen,Pisbol Keju Coklat (Mix),10,33,990000,30000,September
+2026-09-25,Pisang Bolen,Pisbol Coklat Keju (Mix),6,1,18000,18000,September
+2026-09-25,Pisang Bolen,Pisbol Coklat Keju (Mix),10,33,990000,30000,September
 2026-09-26,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-26,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-26,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,September
 2026-09-26,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,September
+2026-09-26,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-26,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
+2026-09-26,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-26,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Keju,10,1,30000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-28,Pisang Bolen,Premium,8,1,35000,35000,September
+2026-09-28,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,September
+2026-09-28,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Keju Tape (Mix),10,3,90000,30000,September
+2026-09-28,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-28,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-28,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Keju Tape (Mix),10,1,30000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Coklat,10,7,210000,30000,September
 2026-09-28,Pisang Bolen,Pisbol Tape,10,1,30000,30000,September
@@ -444,8 +557,10 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-09-30,Pisang Bolen,Pisbol Beef,6,2,36000,18000,September
 2026-09-30,Pisang Bolen,Pisbol Beef,10,1,30000,30000,September
 2026-09-30,Pisang Bolen,Pisbol Coklat Beef (Mix),10,3,90000,30000,September
+2026-09-30,Pisang Bolen,Pisbol Beef,10,1,30000,30000,September
 2026-09-30,Pisang Bolen,Pisbol Coklat Beef (Mix),6,2,36000,18000,September
 2026-09-30,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,September
+2026-09-30,Pisang Bolen,Pisbol Beef,6,2,36000,18000,September
 2026-10-01,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Oktober
 2026-10-01,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Oktober
 2026-10-01,Pisang Bolen,Premium,8,1,35000,35000,Oktober
@@ -454,32 +569,44 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-10-01,Pisang Bolen,Pisbol Coklat,6,10,180000,18000,Oktober
 2026-10-02,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Oktober
 2026-10-02,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
+2026-10-02,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
+2026-10-02,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
+2026-10-02,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
 2026-10-02,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
 2026-10-02,Pisang Bolen,Pisbol Keju,10,1,30000,30000,Oktober
+2026-10-02,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
 2026-10-02,Pisang Bolen,Premium,8,2,70000,35000,Oktober
 2026-10-02,Pisang Bolen,Pisbol Coklat,10,5,150000,30000,Oktober
 2026-10-05,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
 2026-10-06,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Oktober
 2026-10-07,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
+2026-10-07,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
 2026-10-07,Pisang Bolen,Pisbol Tape,10,7,210000,30000,Oktober
 2026-10-08,Pisang Bolen,Premium Mix,8,4,140000,35000,Oktober
 2026-10-08,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
+2026-10-08,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
 2026-10-09,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Oktober
 2026-10-09,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
+2026-10-09,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
+2026-10-09,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Oktober
 2026-10-10,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Oktober
 2026-10-10,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
-2026-10-10,Pisang Bolen,Pisbol Keju Coklat (Mix),10,4,120000,30000,Oktober
+2026-10-10,Pisang Bolen,Pisbol Coklat Keju (Mix),10,4,120000,30000,Oktober
 2026-10-11,Pisang Bolen,Pisbol Coklat,6,50,900000,18000,Oktober
+2026-10-12,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
 2026-10-12,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
 2026-10-12,Pisang Bolen,Pisbol Coklat,6,4,72000,18000,Oktober
 2026-10-12,Pisang Bolen,Pisbol Keju,6,4,72000,18000,Oktober
 2026-10-12,Pisang Bolen,Premium Mix,8,1,35000,35000,Oktober
 2026-10-12,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
+2026-10-12,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
+2026-10-12,Pisang Bolen,Pisbol Coklat,10,1,30000,30000,Oktober
 2026-10-12,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Oktober
 2026-10-13,Pisang Bolen,Pisbol Coklat,10,4,120000,30000,Oktober
 2026-10-13,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Oktober
 2026-10-13,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,Oktober
-2026-10-14,Pisang Bolen,Pisbol Keju Coklat (Mix),4,60,720000,12000,Oktober
+2026-10-13,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,Oktober
+2026-10-14,Pisang Bolen,Pisbol Coklat Keju (Mix),4,60,720000,12000,Oktober
 2026-10-15,Pisang Bolen,Pisbol Coklat,10,50,1500000,30000,Oktober
 2026-10-15,Pisang Bolen,Premium,8,2,70000,35000,Oktober
 2026-10-15,Pisang Bolen,Pisbol Tape,10,4,120000,30000,Oktober
@@ -491,37 +618,54 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-10-31,Pisang Bolen,Mix Keju,6,20,360000,18000,Oktober
 2026-10-31,Pisang Bolen,Pisbol Tape,10,3,90000,30000,Oktober
 2026-10-31,Pisang Bolen,Pisbol Tape,10,4,120000,30000,Oktober
-2026-10-31,Pisang Bolen,Pisbol Tape Coklat (Mix),6,1,18000,18000,Oktober
+2026-10-31,Pisang Bolen,Pisbol Coklat Tape (Mix),6,1,18000,18000,Oktober
 2026-11-02,Pisang Bolen,Pisbol Keju,10,1,30000,30000,November
 2026-11-02,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,November
 2026-11-02,Pisang Bolen,Pisbol Smoked Beef,10,1,30000,30000,November
 2026-11-02,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
+2026-11-02,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-03,Pisang Bolen,Pisbol Keju,10,1,30000,30000,November
+2026-11-03,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
+2026-11-03,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-03,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-03,Pisang Bolen,Pisbol Smoked Beef,10,1,30000,30000,November
 2026-11-03,Pisang Bolen,Pisbol Ubi Ungu,6,2,36000,18000,November
 2026-11-03,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
 2026-11-03,Pisang Bolen,Pisbol Coklat Tape (Mix),10,1,30000,30000,November
 2026-11-03,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
+2026-11-03,Pisang Bolen,Pisbol Smoked Beef,10,1,30000,30000,November
+2026-11-03,Pisang Bolen,Pisbol Smoked Beef,10,1,30000,30000,November
+2026-11-03,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
+2026-11-03,Pisang Bolen,Pisbol Smoked Beef,10,1,30000,30000,November
+2026-11-03,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
+2026-11-03,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
 2026-11-03,Pisang Bolen,Pisbol Ubi Ungu,4,1,12000,12000,November
+2026-11-03,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-04,Pisang Bolen,Pisbol Tape,10,6,180000,30000,November
-2026-11-04,Pisang Bolen,Pisbol Ubi Ungu Keju (Mix),10,1,30000,30000,November
+2026-11-04,Pisang Bolen,Pisbol Keju Ubi Ungu (Mix),10,1,30000,30000,November
 2026-11-04,Pisang Bolen,Pisbol Smoked Beef,10,5,150000,30000,November
 2026-11-04,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
 2026-11-04,Pisang Bolen,Pisbol Ubi Ungu Keju,10,1,30000,30000,November
+2026-11-04,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
+2026-11-04,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
 2026-11-04,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-04,Pisang Bolen,Pisbol Ubi Ungu,4,1,12000,12000,November
 2026-11-04,Pisang Bolen,Pisbol Tape,4,1,12000,12000,November
+2026-11-04,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
+2026-11-04,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Tape,10,3,90000,30000,November
-2026-11-05,Pisang Bolen,Pisbol Ubi Ungu Tape (Mix),10,1,30000,30000,November
+2026-11-05,Pisang Bolen,Pisbol Tape Ubi Ungu (Mix),10,1,30000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Beef,10,4,120000,30000,November
+2026-11-05,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Tape,10,2,60000,30000,November
-2026-11-05,Pisang Bolen,Pisbol Beef Tape (Mix),10,1,30000,30000,November
+2026-11-05,Pisang Bolen,Pisbol Tape Ubi Ungu (Mix),10,1,30000,30000,November
+2026-11-05,Pisang Bolen,Pisbol Tape Beef (Mix),10,1,30000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Keju,10,4,120000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Coklat,10,3,90000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Beef,10,15,450000,30000,November
+2026-11-05,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Beef,10,2,60000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Ubi Ungu,10,2,60000,30000,November
 2026-11-05,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,November
@@ -529,22 +673,28 @@ tanggal,nama_produk,variant,isi_pcs,quantity,total_harga,harga_per_pack,sheet
 2026-11-06,Pisang Bolen,Pisbol Tape,4,16,192000,12000,November
 2026-11-06,Pisang Bolen,Pisbol Beef,4,16,192000,12000,November
 2026-11-06,Pisang Bolen,Pisbol Pisang Coklat (Mix),57,1,171000,171000,November
-2026-11-06,Pisang Bolen,Pisbol Ubi Ungu Keju (Mix),57,1,171000,171000,November
+2026-11-06,Pisang Bolen,Pisbol Keju Ubi Ungu (Mix),57,1,171000,171000,November
 2026-11-06,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
 2026-11-06,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
 2026-11-06,Pisang Bolen,Pisbol Beef,10,3,90000,30000,November
-2026-11-07,Pisang Bolen,Pisbol Ubi Ungu Beef (Mix),10,16,480000,30000,November
+2026-11-07,Pisang Bolen,Pisbol Beef Ubi Ungu (Mix),10,16,480000,30000,November
 2026-11-07,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
 2026-11-07,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-07,Pisang Bolen,Pisbol Coklat,6,1,18000,18000,November
 2026-11-07,Pisang Bolen,Pisbol Ubi Ungu,6,1,18000,18000,November
 2026-11-07,Pisang Bolen,Pisbol Tape,6,1,18000,18000,November
+2026-11-07,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
 2026-11-09,Pisang Bolen,Pisbol Ubi Ungu Pisang Keju (Mix),57,1,171000,171000,November
 2026-11-09,Pisang Bolen,Pisbol Keju,12,1,36000,36000,November
 2026-11-09,Pisang Bolen,Pisbol Beef,12,1,36000,36000,November
 2026-11-09,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
 2026-11-09,Pisang Bolen,Pisbol Ubi Ungu,10,1,30000,30000,November
 2026-11-09,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
+2026-11-09,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
+2026-11-09,Pisang Bolen,Pisbol Beef,10,1,30000,30000,November
+2026-11-09,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,November
+2026-11-09,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,November
 2026-11-09,Pisang Bolen,Pisbol Coklat,10,2,60000,30000,November
 2026-11-09,Pisang Bolen,Pisbol Keju,10,1,30000,30000,November
 2026-11-09,Pisang Bolen,Pisbol Beef,10,2,60000,30000,November
+2026-11-09,Pisang Bolen,Pisbol Tape,10,1,30000,30000,November
