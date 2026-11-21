@@ -16,3 +16,15 @@
 - **Git:** repository diinisialisasi
 - **`.gitignore`:** dibuat
 - **GATE:** LULUS — semua cek preflight berhasil
+
+## TAHAP A: Audit Tahap 1 ✅
+- **Tanggal:** 2026-11-21
+- **Pemeriksaan:** branch `copilot`, log/status Git, migration, model, route, controller, seeder, CORS, database, dan HTTP auth.
+- **Audit:** skema tabel sesuai spesifikasi. Migration, produk, varian, transaksi, dan profil sesuai; database `sava_test` tersedia.
+- **Perbaikan:** respons autentikasi API dijadikan JSON 401 konsisten untuk request dengan atau tanpa header `Accept`.
+- **GATE:** LULUS
+  - `migrate:fresh --seed --no-interaction`: sukses
+  - login admin mengembalikan token
+  - `/api/me` dengan token: 200
+  - `/api/me` tanpa token dengan dan tanpa header Accept: 401 JSON
+  - [docs/AUDIT.md](AUDIT.md) tersedia
