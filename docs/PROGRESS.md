@@ -91,3 +91,14 @@
   - Endpoint ML: health sukses; forecast 30 hari aktual + 7 hari prediksi; klasifikasi 23 varian termasuk 8 yang datanya belum cukup; aturan bundling berjumlah 5 per hari dan 1 per transaksi.
   - Browser: seluruh tab Dashboard memuat data melalui API; konfirmasi katalog tampil. Pemeriksaan dilakukan dengan Laravel terarah ke `sava_test`; tidak ada data uji ditulis ke `sava`.
   - Server uji dihentikan setelah pemeriksaan.
+
+## TAHAP 6: integrasi dan dokumentasi ✅
+- **Tanggal:** 2026-11-22
+- **Dokumentasi:** root `README.md` menjelaskan setup Windows dari nol, konfigurasi `.env` per aplikasi, PostgreSQL/PDO pgsql, dataset Excel lokal, urutan clean/migrate/seed/train/run, kredensial pengembangan, struktur folder, endpoint, dan peringatan atas migrasi destruktif serta smoke test yang menambah transaksi. `docs/api.md` mendokumentasikan endpoint dan contoh request/respons; `DESIGN_SYSTEM.md` mendata token CSS, tipografi, komponen, breakpoint, grafik, halaman, dan alur.
+- **Integrasi:** `scripts/smoke_test.ps1` login, menyimpan satu transaksi, memeriksa lima endpoint dashboard dan empat endpoint ML, serta mencetak status per langkah. Koleksi Postman ringkas ditambahkan hanya setelah seluruh gate lulus.
+- **Validasi start-dev:** lokasi root dan path backend/FastAPI/frontend sesuai struktur proyek; perintah menunjuk ke Laravel, venv Python lokal, dan Vite.
+- **GATE — Laravel:** `php artisan test`: 9 tes, 68 assertion lulus.
+- **GATE — frontend:** `npm run build`: lulus.
+- **GATE — smoke:** database `sava_test` di-reset/di-seed secara eksplisit; Laravel dan FastAPI diarahkan ke `sava_test`. Login, transaksi `TRX-20261122-0001`, lima endpoint dashboard, dan empat endpoint `/api/ml/*` semuanya `[LULUS]`. Database `sava` tidak menjadi target tes ini.
+- **Pembersihan:** proses Laravel/FastAPI untuk gate dihentikan dan port 8000/8001 dipastikan tidak lagi listening.
+- **Data/model yang dicatat untuk pelaporan:** 699 baris valid dari 699 baris sumber; 0 baris invalid/identik dibuang. Aturan deduplikasi lama yang keliru pernah membuang 150 baris berbeda nomor, kini seluruhnya dipertahankan. Forecast MAE Rp368.294,06, RMSE Rp482.530,86, R² 0,0125; akurasi klasifikasi 0,7173 latih dan 0,5000 uji dari 239 baris varian-minggu. Keterbatasan dijelaskan di `docs/ASSUMPTIONS.md` dan laporan evaluasi.
