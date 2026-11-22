@@ -13,7 +13,7 @@ Dokumentasi ini merangkum nilai yang sudah dipakai di `frontend/src/styles.css` 
 | `--warm` | `#f7f5ed` | Latar aplikasi |
 | `--surface` | `#fffefa` | Kartu dan permukaan |
 | `--ink` | `#1b2a24` | Teks utama |
-| `--muted` | `#67756f` | Teks sekunder |
+| `--muted` | `#4f5d57` | Teks sekunder dengan kontras lebih kuat |
 | `--border` | `#dde3dc` | Border dan pemisah |
 | `--apricot` | `#f3b884` | Garis prediksi |
 | `--danger` | `#a63d40` | Aksi/error berbahaya |
@@ -31,8 +31,8 @@ Warna pendukung yang dipakai langsung pada CSS meliputi putih, `#edf3e8`, `#edf0
 
 - Keluarga: Poppins, diimpor lokal dari `@fontsource/poppins`.
 - Bobot yang dimuat: 400, 500, 600, 700. Bobot 800 dipakai untuk marka logo.
-- Ukuran antarmuka yang lazim: 9–12 px untuk label/catatan kecil; 13–15 px untuk isi dan judul kartu; 17–21 px untuk angka/heading; 22 px pada heading layar kecil; 26–27 px untuk judul halaman/login; 32 px untuk metrik ringkasan.
-- Line-height umumnya rapat untuk angka dan 1.45–1.65 untuk teks deskriptif.
+- Ukuran antarmuka yang lazim: 9–12 px untuk label kontrol/metadata; teks penjelas kartu, panel, keadaan kosong, dan catatan memakai 14 px (minimal 13 px pada layar kecil); 17–21 px untuk angka/heading; 22 px pada heading layar kecil; 26–27 px untuk judul halaman/login; 32 px untuk metrik ringkasan.
+- Line-height umumnya rapat untuk angka dan sekitar 1.6 untuk teks deskriptif.
 
 ## Jarak, radius, bayangan
 
@@ -45,13 +45,13 @@ Warna pendukung yang dipakai langsung pada CSS meliputi putih, `#edf3e8`, `#edf0
 
 - Navigasi: sidebar desktop, item biasa/aktif, navigasi bawah mobile, item aktif dengan latar lime.
 - Tombol: primary (forest), secondary, icon, text, danger, refresh, serta state hover/disabled.
-- Form: label, input, textarea, select, fokus dengan ring, pencarian katalog.
+- Form: label, input, textarea, select dengan panah kustom yang konsisten, fokus dengan ring, pencarian katalog.
 - Kartu: panel produk/katalog, keranjang, ringkasan profil, metrik, panel dashboard, rekomendasi bundling.
 - Kasir: baris produk, ikon produk, kontrol jumlah, hapus item, total nota, keadaan keranjang kosong.
 - Katalog: kartu produk, baris varian aktif/nonaktif, dialog edit/tambah, status dot.
 - Dialog/toast: modal konfirmasi, toast sukses/error/info dengan tombol tutup.
-- Dashboard: tab Ringkasan/Prediksi/Produk/Bundling, filter, metrik, panel grafik/tabel, bar, confusion matrix, aturan pohon, segmented control bundling.
-- Feedback: skeleton/loading, empty state, dashboard error, badge klasifikasi `laris`/`kurang laris`/`tidak laris`.
+- Dashboard: tab Ringkasan/Prediksi/Produk/Bundling, panel bantuan "Apa ini?" yang dapat diciutkan, filter, metrik, panel grafik/tabel, bar dengan tooltip dan titik aktif, confusion matrix, aturan pohon, segmented control bundling, tooltip definisi support/confidence/lift.
+- Feedback: loading spinner dengan pesan dan skeleton pendukung, empty state, dashboard error, badge klasifikasi `laris`/`kurang laris`/`tidak laris`.
 
 ## Breakpoint responsif
 

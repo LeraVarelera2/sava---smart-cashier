@@ -102,3 +102,11 @@
 - **GATE — smoke:** database `sava_test` di-reset/di-seed secara eksplisit; Laravel dan FastAPI diarahkan ke `sava_test`. Login, transaksi `TRX-20261122-0001`, lima endpoint dashboard, dan empat endpoint `/api/ml/*` semuanya `[LULUS]`. Database `sava` tidak menjadi target tes ini.
 - **Pembersihan:** proses Laravel/FastAPI untuk gate dihentikan dan port 8000/8001 dipastikan tidak lagi listening.
 - **Data/model yang dicatat untuk pelaporan:** 699 baris valid dari 699 baris sumber; 0 baris invalid/identik dibuang. Aturan deduplikasi lama yang keliru pernah membuang 150 baris berbeda nomor, kini seluruhnya dipertahankan. Forecast MAE Rp368.294,06, RMSE Rp482.530,86, R² 0,0125; akurasi klasifikasi 0,7173 latih dan 0,5000 uji dari 239 baris varian-minggu. Keterbatasan dijelaskan di `docs/ASSUMPTIONS.md` dan laporan evaluasi.
+
+## REVISI TAMPILAN DASHBOARD ✅
+- **Tanggal:** 2026-11-22
+- **Tampilan:** panah select kustom dengan ruang kanan seragam; loading dashboard menampilkan spinner dan pesan; deskripsi dinaikkan ke 14 px (13 px pada HP) dan warna sekunder `#4f5d57`; kartu MAE/RMSE/R² diberi penjelasan dinamis, termasuk peringatan untuk R² di bawah 0,3.
+- **Interaksi:** tooltip dan titik aktif ditambahkan pada grafik garis dan batang; baris produk teratas menampilkan rincian pada hover/tap; setiap tab memiliki panel "Apa ini?" yang terbuka secara bawaan dan dapat diciutkan; Support/Confidence/Lift memiliki tooltip definisi.
+- **Kontras:** `#4f5d57` memiliki rasio 6,34:1 terhadap `#f7f5ed` dan 6,85:1 terhadap `#fffefa`.
+- **Batas perubahan:** hanya `frontend/src/pages/Dashboard.jsx`, `frontend/src/styles.css`, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan backend/ML, endpoint, perhitungan, atau data. Default filter sumber tetap seperti implementasi semula (`Semua sumber`); tidak ada penulisan ke database.
+- **GATE:** `npm run build`: lulus. Tidak dilakukan pemeriksaan browser; port 8000, 8001, dan 5173 kosong.
