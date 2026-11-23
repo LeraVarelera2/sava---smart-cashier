@@ -110,3 +110,12 @@
 - **Kontras:** `#4f5d57` memiliki rasio 6,34:1 terhadap `#f7f5ed` dan 6,85:1 terhadap `#fffefa`.
 - **Batas perubahan:** hanya `frontend/src/pages/Dashboard.jsx`, `frontend/src/styles.css`, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan backend/ML, endpoint, perhitungan, atau data. Default filter sumber tetap seperti implementasi semula (`Semua sumber`); tidak ada penulisan ke database.
 - **GATE:** `npm run build`: lulus. Tidak dilakukan pemeriksaan browser; port 8000, 8001, dan 5173 kosong.
+
+## REVISI TAMPILAN DASHBOARD PUTARAN 2 ✅
+- **Tanggal:** 2026-11-23
+- **Keterbacaan:** skala judul, panel, KPI, tabel, dan label diseragamkan; deskripsi panel dipangkas. Ringkasan bantuan tiap tab kini satu baris, dengan "Cara membaca" tertutup secara bawaan.
+- **Dashboard:** kartu sorotan menampilkan jumlah perkiraan omzet tujuh hari, ringkasan klasifikasi produk, dan paket terkuat dari data API yang telah diterima. Nilai MAE/RMSE/R² diberi judul serta penjelasan yang lebih ringkas; predikat R² hanya presentasi.
+- **Grafik dan bundling:** tooltip mengikuti posisi titik/batang aktif; rekomendasi paket memakai label bahasa sehari-hari tanpa ikon definisi teknis.
+- **Tombol:** label muat ulang memakai ikon refresh dan spinner saat memuat; "Coba lagi" tetap tersedia pada keadaan error. Filter sumber dimulai dari historis.
+- **Batas perubahan:** hanya `frontend/src/pages/Dashboard.jsx`, `frontend/src/styles.css`, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan backend/ML, endpoint, logika analisis, atau data; tidak dijalankan server dan tidak ditulis database.
+- **GATE:** `npm run build`: lulus. `git diff --name-only` hanya memuat empat file yang diizinkan. Tidak dilakukan pemeriksaan browser sesuai permintaan.

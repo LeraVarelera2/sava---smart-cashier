@@ -31,8 +31,8 @@ Warna pendukung yang dipakai langsung pada CSS meliputi putih, `#edf3e8`, `#edf0
 
 - Keluarga: Poppins, diimpor lokal dari `@fontsource/poppins`.
 - Bobot yang dimuat: 400, 500, 600, 700. Bobot 800 dipakai untuk marka logo.
-- Ukuran antarmuka yang lazim: 9–12 px untuk label kontrol/metadata; teks penjelas kartu, panel, keadaan kosong, dan catatan memakai 14 px (minimal 13 px pada layar kecil); 17–21 px untuk angka/heading; 22 px pada heading layar kecil; 26–27 px untuk judul halaman/login; 32 px untuk metrik ringkasan.
-- Line-height umumnya rapat untuk angka dan sekitar 1.6 untuk teks deskriptif.
+- Skala tipografi: judul halaman 22–24 px dengan bobot 600; judul kartu/panel 16–18 px dengan bobot 600; deskripsi 13–14 px dengan bobot normal dan warna sekunder; angka utama KPI 28–32 px; teks tabel 14 px; label kecil/chip 12–13 px. Metadata dan label kontrol dapat memakai 9–12 px.
+- Skala diterapkan lintas halaman: judul halaman/login 22–24 px; judul keranjang, bagian profil, katalog, modal, dan panel 16–18 px; teks penjelas memakai warna sekunder. Line-height umumnya rapat untuk angka dan sekitar 1.6 untuk teks deskriptif.
 
 ## Jarak, radius, bayangan
 
@@ -50,7 +50,7 @@ Warna pendukung yang dipakai langsung pada CSS meliputi putih, `#edf3e8`, `#edf0
 - Kasir: baris produk, ikon produk, kontrol jumlah, hapus item, total nota, keadaan keranjang kosong.
 - Katalog: kartu produk, baris varian aktif/nonaktif, dialog edit/tambah, status dot.
 - Dialog/toast: modal konfirmasi, toast sukses/error/info dengan tombol tutup.
-- Dashboard: tab Ringkasan/Prediksi/Produk/Bundling, panel bantuan "Apa ini?" yang dapat diciutkan, filter, metrik, panel grafik/tabel, bar dengan tooltip dan titik aktif, confusion matrix, aturan pohon, segmented control bundling, tooltip definisi support/confidence/lift.
+- Dashboard: tab Ringkasan/Prediksi/Produk/Bundling, ringkasan bantuan satu baris dengan detail "Cara membaca" tertutup secara bawaan, filter, kartu sorotan dan metrik, panel grafik/tabel, tooltip grafik yang mengikuti titik/batang aktif, confusion matrix, aturan pohon, segmented control, serta rekomendasi paket dengan label bahasa sehari-hari.
 - Feedback: loading spinner dengan pesan dan skeleton pendukung, empty state, dashboard error, badge klasifikasi `laris`/`kurang laris`/`tidak laris`.
 
 ## Breakpoint responsif

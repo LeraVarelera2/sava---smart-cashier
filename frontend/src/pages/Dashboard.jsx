@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Activity, ChevronDown, ChevronUp, CircleHelp, Info, LoaderCircle, RefreshCw, TrendingUp } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Activity, ChevronDown, Info, LoaderCircle, RefreshCw, TrendingUp } from 'lucide-react'
 import { api, notifyApiError } from '../api'
 import { useToast } from '../components/ToastProvider'
 
@@ -13,10 +13,22 @@ const tabs = [
 const rupiah = value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(value) || 0)
 const integer = value => new Intl.NumberFormat('id-ID', { maximumFractionDigits: 0 }).format(Number(value) || 0)
 const tabHelp = {
-  ringkasan: 'Halaman ini merangkum penjualan usaha: omzet, jumlah transaksi, produk paling laku, serta hari dan jam paling ramai. Pilih Sumber data dan Rentang di atas. Historis = catatan penjualan asli Mei-November. Simulasi = data contoh buatan untuk 30 hari terakhir, dipakai menguji fitur jam sibuk dan bundling per transaksi; bukan penjualan nyata. Kasir = transaksi yang dicatat lewat halaman Kasir.',
-  prediksi: 'Memperkirakan omzet harian 7 hari ke depan dari pola penjualan sebelumnya (hari dalam minggu dan tren). Ini perkiraan, bukan kepastian. Garis penuh = omzet sebenarnya, garis putus-putus = perkiraan.',
-  produk: "Mengelompokkan setiap varian menjadi Laris, Kurang Laris, atau Tidak Laris berdasarkan jumlah terjual per minggu, lalu memperkirakan kelasnya minggu depan. 'Data belum cukup' berarti varian itu terjual kurang dari 4 minggu. Akurasi = persentase tebakan model yang benar pada data uji.",
-  bundling: 'Mencari produk yang sering terjual bersamaan sebagai ide paket hemat. Support = seberapa sering kombinasi itu muncul (20% berarti 1 dari 5 keranjang). Confidence = jika produk A dibeli, seberapa sering produk B ikut dibeli. Lift = seberapa kuat hubungannya dibanding kebetulan; di atas 1 berarti lebih sering bersama daripada kebetulan, makin besar makin kuat. Per hari = semua varian yang terjual di hari yang sama dianggap satu keranjang; per transaksi = satu nota satu keranjang.',
+  ringkasan: {
+    summary: 'Gambaran penjualan usahamu.',
+    detail: 'Historis = catatan penjualan asli. Simulasi = data contoh buatan, bukan penjualan nyata. Kasir = transaksi dari halaman Kasir.',
+  },
+  prediksi: {
+    summary: 'Perkiraan omzet 7 hari ke depan.',
+    detail: 'Garis penuh = omzet sebenarnya. Garis putus-putus = perkiraan. Perkiraan hanya gambaran kasar, bukan kepastian.',
+  },
+  produk: {
+    summary: 'Produk mana yang laris dan tidak.',
+    detail: "Laris, Kurang laris, Tidak laris dihitung dari jumlah terjual per minggu. 'Data belum cukup' = terjual kurang dari 4 minggu.",
+  },
+  bundling: {
+    summary: 'Produk yang sering dibeli bersamaan, cocok dijadikan paket.',
+    detail: 'Muncul bersama = seberapa sering dua produk terjual bersamaan. Ikut dibeli = jika A dibeli, seberapa sering B ikut. Kekuatan = di atas 1x berarti hubungannya nyata, bukan kebetulan.',
+  },
 }
 
 function periodLabel(value) {
@@ -32,50 +44,38 @@ function EmptyState({ title, children }) {
   return <div className="dashboard-empty"><Activity size={22} /><strong>{title}</strong>{children && <span>{children}</span>}</div>
 }
 
-function TabHelp({ tab, children }) {
-  const [expanded, setExpanded] = useState(true)
-  const contentId = `dashboard-help-${tab}`
-
+function TabHelp({ children }) {
   return (
     <aside className="dashboard-help">
-      <button type="button" className="dashboard-help-toggle" aria-expanded={expanded} aria-controls={contentId} onClick={() => setExpanded(value => !value)}>
+      <div className="dashboard-help-row">
         <Info size={17} />
-        <span>Apa ini?</span>
-        {expanded ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
-      </button>
-      <div id={contentId} className="dashboard-help-content" hidden={!expanded}><p>{children}</p></div>
+        <p>{children.summary}</p>
+        <details className="dashboard-help-details">
+          <summary>Cara membaca <ChevronDown size={15} /></summary>
+          <p>{children.detail}</p>
+        </details>
+      </div>
     </aside>
-  )
-}
-
-function InfoTooltip({ label, description }) {
-  const [expanded, setExpanded] = useState(false)
-
-  return (
-    <span className="metric-help" data-open={expanded}>
-      <button type="button" aria-label={`Penjelasan ${label}`} aria-expanded={expanded} title={description} onClick={() => setExpanded(value => !value)}>
-        <CircleHelp size={14} />
-      </button>
-      <span className="metric-tooltip" role="tooltip">{description}</span>
-    </span>
   )
 }
 
 function Panel({ title, description, children, className = '' }) {
   return (
     <article className={`dashboard-panel ${className}`}>
-      <header><h2>{title}</h2><p>{description}</p></header>
+      <header><h2>{title}</h2>{description && <p>{description}</p>}</header>
       {children}
     </article>
   )
 }
 
-function MetricCard({ label, value, note }) {
-  return <article className="metric-card"><span>{label}</span><strong>{value}</strong><small>{note}</small></article>
+function MetricCard({ label, value, note, badge }) {
+  return <article className="metric-card"><div className="metric-card-label"><span>{label}</span>{badge && <small>{badge}</small>}</div><strong>{value}</strong><small>{note}</small></article>
 }
 
 function LineChart({ labels, series, ariaLabel }) {
   const [activePoint, setActivePoint] = useState(null)
+  const chartRef = useRef(null)
+  const wrapperRef = useRef(null)
   const width = 780
   const height = 250
   const pad = { top: 16, right: 12, bottom: 40, left: 72 }
@@ -89,7 +89,19 @@ function LineChart({ labels, series, ariaLabel }) {
   const showPoint = (item, index) => {
     const value = item.values[index]
     if (!Number.isFinite(value)) return
-    setActivePoint({ series: item.name, label: labels[index], value: rupiah(value), x: x(index), y: y(value) })
+    const chartBounds = chartRef.current.getBoundingClientRect()
+    const wrapperBounds = wrapperRef.current.getBoundingClientRect()
+    const pointX = chartBounds.left - wrapperBounds.left + x(index) / width * chartBounds.width
+    const pointY = chartBounds.top - wrapperBounds.top + y(value) / height * chartBounds.height
+    setActivePoint({
+      series: item.name,
+      label: labels[index],
+      value: rupiah(value),
+      x: Math.max(8, Math.min(wrapperBounds.width - 8, pointX)),
+      y: pointY,
+      align: pointX > wrapperBounds.width - 220 ? 'right' : 'left',
+      below: pointY < 56,
+    })
   }
 
   function pathsFor(valuesToPlot) {
@@ -110,8 +122,8 @@ function LineChart({ labels, series, ariaLabel }) {
   if (!values.length) return <EmptyState title="Belum ada data untuk digambarkan." />
 
   return (
-    <div className="line-chart-wrap">
-      <svg className="line-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label={ariaLabel}>
+    <div className="line-chart-wrap" ref={wrapperRef}>
+      <svg ref={chartRef} className="line-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label={ariaLabel}>
         {[0, 1, 2, 3].map(step => {
           const value = max - (max - min) * step / 3
           const yPos = y(value)
@@ -149,9 +161,9 @@ function LineChart({ labels, series, ariaLabel }) {
       </svg>
       {activePoint && (
         <div
-          className={`chart-tooltip ${activePoint.y < 76 ? 'below' : ''}`}
+          className={`chart-tooltip ${activePoint.align} ${activePoint.below ? 'below' : ''}`}
           role="tooltip"
-          style={{ left: `clamp(132px, ${(activePoint.x / width) * 100}%, calc(100% - 132px))`, top: `${(activePoint.y / height) * 100}%` }}
+          style={{ left: `${activePoint.x}px`, top: `${activePoint.y}px` }}
         >
           <strong>{periodLabel(activePoint.label)}</strong>
           <span>{activePoint.series} · {activePoint.value}</span>
@@ -176,7 +188,6 @@ function BarList({ items, value, label, display }) {
           role="button"
           aria-label={`${label(item)}: ${display(item)}`}
           aria-expanded={activeIndex === index}
-          data-tooltip={`${label(item)}: ${display(item)}`}
           data-open={activeIndex === index}
           onPointerEnter={event => { if (event.pointerType === 'mouse') setActiveIndex(index) }}
           onPointerLeave={event => { if (event.pointerType === 'mouse') setActiveIndex(null) }}
@@ -194,7 +205,13 @@ function BarList({ items, value, label, display }) {
           <span className="bar-label">{label(item)}</span>
           <span className="bar-track">
             <i style={{ width: `${Math.max(2, (Number(value(item)) || 0) / maximum * 100)}%` }} />
-            {activeIndex === index && <b className="bar-active-dot" style={{ left: `${Math.max(2, (Number(value(item)) || 0) / maximum * 100)}%` }} />}
+            {activeIndex === index && (() => {
+              const position = Math.max(2, (Number(value(item)) || 0) / maximum * 100)
+              return <>
+                <b className="bar-active-dot" style={{ left: `${position}%` }} />
+                <span className={`bar-tooltip ${position > 80 ? 'right' : position < 20 ? 'left' : ''}`} role="tooltip" style={{ left: `${position}%` }}>{label(item)}: {display(item)}</span>
+              </>
+            })()}
           </span>
           <strong>{display(item)}</strong>
         </div>
@@ -279,24 +296,17 @@ function ConfusionMatrix({ matrix }) {
 
 function BundlingCards({ result }) {
   if (!result?.data?.length) return <EmptyState title="Belum ditemukan pola bundling yang kuat." />
-  const tooltipCopy = {
-    Support: 'Support: seberapa sering kombinasi ini muncul di semua keranjang. 20% berarti 1 dari 5 keranjang.',
-    Confidence: 'Confidence: jika produk A dibeli, seberapa sering produk B ikut dibeli.',
-    Lift: 'Lift: kekuatan hubungan dibanding kebetulan. Di atas 1 berarti lebih sering bersama; makin besar makin kuat.',
-  }
   return (
     <div className="bundle-grid">
       {result.data.map(rule => (
         <article className="bundle-card" key={`${rule.item_a}-${rule.item_b}`}>
-          <p className="eyebrow">Rekomendasi paket</p>
           <h3>{rule.item_a} <span>+</span> {rule.item_b}</h3>
-          <p className="bundle-sentence">{rule.sentence || `${rule.item_a} dan ${rule.item_b} cenderung dibeli bersama.`}</p>
+          <p className="bundle-sentence">Sering terjual bersamaan. Cocok dijadikan paket.</p>
           <div className="bundle-stats">
-            <span><strong>{(rule.support * 100).toFixed(1)}%</strong><span className="bundle-stat-label">Support <InfoTooltip label="Support" description={tooltipCopy.Support} /></span></span>
-            <span><strong>{(rule.confidence * 100).toFixed(1)}%</strong><span className="bundle-stat-label">Confidence <InfoTooltip label="Confidence" description={tooltipCopy.Confidence} /></span></span>
-            <span><strong>{rule.lift.toFixed(2)}×</strong><span className="bundle-stat-label">Lift <InfoTooltip label="Lift" description={tooltipCopy.Lift} /></span></span>
+            <span><strong>{(rule.support * 100).toFixed(1)}%</strong><span className="bundle-stat-label">Muncul bersama <small>(support)</small></span></span>
+            <span><strong>{(rule.confidence * 100).toFixed(1)}%</strong><span className="bundle-stat-label">Jika beli A, ikut beli B <small>(confidence)</small></span></span>
+            <span><strong>{Number(rule.lift).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}x</strong><span className="bundle-stat-label">Kekuatan <small>(lift)</small></span></span>
           </div>
-          <small>Nilai ini merangkum seberapa sering pasangan muncul dan seberapa kuat hubungannya.</small>
         </article>
       ))}
     </div>
@@ -306,7 +316,7 @@ function BundlingCards({ result }) {
 export default function Dashboard() {
   const { showToast } = useToast()
   const [activeTab, setActiveTab] = useState('ringkasan')
-  const [source, setSource] = useState('semua')
+  const [source, setSource] = useState('historis')
   const [range, setRange] = useState('30')
   const [basis, setBasis] = useState('day')
   const [retry, setRetry] = useState(0)
@@ -391,14 +401,25 @@ export default function Dashboard() {
   const excludedCount = classificationMetrics.excluded_variant_count ?? 0
   const maeInThousands = metric.mae !== null && metric.mae !== undefined && Number.isFinite(Number(metric.mae))
     ? `Rp${integer(Math.round(Number(metric.mae) / 1000))} ribu`
-    : 'nilai MAE'
+    : 'Rp—'
   const hasLowR2 = metric.r2 !== null && metric.r2 !== undefined && Number.isFinite(Number(metric.r2)) && Number(metric.r2) < 0.3
+  const hasR2 = metric.r2 !== null && metric.r2 !== undefined && Number.isFinite(Number(metric.r2))
+  const r2Value = hasR2 ? Number(metric.r2) : null
+  const predictedRevenue = forecast?.forecast?.reduce((total, row) => total + (Number(row.omzet) || 0), 0) || 0
+  const predictedDays = forecast?.forecast?.length || 0
+  const productCounts = (classification?.products || []).reduce((counts, product) => {
+    const status = String(product.prediksi_minggu_depan || '').toLowerCase()
+    if (status === 'laris' || status === 'kurang laris' || status === 'tidak laris') counts[status] += 1
+    else if (status === 'data belum cukup') counts.insufficient += 1
+    return counts
+  }, { 'laris': 0, 'kurang laris': 0, 'tidak laris': 0, insufficient: 0 })
+  const firstBundle = activeBundling?.data?.[0]
 
   return (
     <section className="dashboard-page">
       <header className="page-header dashboard-header">
         <div><p className="eyebrow">Analitik usaha</p><h1>Dashboard</h1></div>
-        <button type="button" className="secondary-button dashboard-refresh" onClick={() => setRetry(value => value + 1)} disabled={loading}><RefreshCw size={16} /> Coba lagi</button>
+        <button type="button" className="secondary-button dashboard-refresh" onClick={() => setRetry(value => value + 1)} disabled={loading}>{loading ? <LoaderCircle className="loading-spinner" size={16} /> : <RefreshCw size={16} />} Muat ulang</button>
       </header>
 
       <div className="dashboard-filters">
@@ -419,12 +440,12 @@ export default function Dashboard() {
           </select>
         </label>
       </div>
-      <p className="dashboard-filter-note">Filter sumber dan rentang berlaku untuk Ringkasan. Prediksi serta klasifikasi mengikuti model historis; Bundling dapat memilih basisnya sendiri.</p>
+      <p className="dashboard-filter-note">Filter berlaku untuk Ringkasan; model memakai historis. Bundling memakai basis pilihan.</p>
 
       <div className="dashboard-tabs" role="tablist" aria-label="Bagian dashboard">
         {tabs.map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={activeTab === id} className={activeTab === id ? 'active' : ''} onClick={() => setActiveTab(id)}>{label}</button>)}
       </div>
-      <TabHelp key={activeTab} tab={activeTab}>{tabHelp[activeTab]}</TabHelp>
+      <TabHelp key={activeTab}>{tabHelp[activeTab]}</TabHelp>
 
       {loading ? <div className="dashboard-loading" role="status" aria-live="polite">
         <div className="dashboard-loading-skeletons" aria-hidden="true"><div className="skeleton" /><div className="skeleton" /><div className="skeleton" /></div>
@@ -439,24 +460,25 @@ export default function Dashboard() {
                 <MetricCard label="Produk terjual" value={`${integer(summary?.total_pcs)} pcs`} note="Jumlah unit dari kemasan yang tercatat" />
                 <MetricCard label="Rata-rata transaksi" value={rupiah(summary?.rata_rata_omzet)} note="Omzet dibagi jumlah transaksi" />
               </div>
-              <Panel title="Tren omzet" description="Garis menunjukkan perubahan omzet; titik lebih tinggi berarti penjualan lebih besar." className="chart-panel">
+              <Panel title="Tren omzet" className="chart-panel">
                 {trend.length ? <LineChart labels={trend.map(row => row.period)} series={[{ name: 'Omzet', color: 'var(--forest-2)', values: trend.map(row => Number(row.omzet)) }]} ariaLabel="Grafik tren omzet" /> : <EmptyState title="Belum ada transaksi pada filter ini." />}
               </Panel>
               <div className="dashboard-two-column">
-                <Panel title="Produk terlaris" description="Produk diurutkan dari jumlah unit terjual terbanyak.">
+                <Panel title="Produk terlaris">
                   <TopProductsTable products={topProducts} />
                 </Panel>
-                <Panel title="Hari tersibuk" description="Batang menunjukkan rata-rata omzet per hari dalam seminggu.">
+                <Panel title="Hari tersibuk" description="Rata-rata omzet per hari.">
                   <BarList items={busyDays} label={item => item.hari} value={item => item.rata_rata_omzet} display={item => rupiah(item.rata_rata_omzet)} />
                 </Panel>
-                <Panel title="Jam transaksi" description="Jumlah transaksi dikelompokkan menurut jam terjadinya.">
+                <Panel title="Jam transaksi">
                   {busyHours.data?.length ? <BarList items={busyHours.data} label={item => `${String(item.jam).padStart(2, '0')}.00`} value={item => item.jumlah_transaksi} display={item => `${integer(item.jumlah_transaksi)} transaksi`} /> : <EmptyState title={busyHours.message || 'Belum ada data jam transaksi.'} />}
                 </Panel>
               </div>
             </div>}
 
             {activeTab === 'prediksi' && <div className="dashboard-content">
-              <Panel title="Omzet aktual dan prediksi 7 hari" description="Garis penuh adalah omzet historis 30 hari terakhir; garis putus-putus menunjukkan perkiraan untuk 7 hari berikutnya." className="chart-panel">
+              {predictedDays > 0 && <MetricCard label="Perkiraan omzet 7 hari ke depan" value={rupiah(predictedRevenue)} note={`Rata-rata ${rupiah(Math.round(predictedRevenue / predictedDays))} per hari`} />}
+              <Panel title="Omzet aktual dan prediksi 7 hari" className="chart-panel">
                 {forecast?.history?.length && forecast?.forecast?.length ? (() => {
                   const history = forecast.history
                   const future = forecast.forecast
@@ -471,38 +493,49 @@ export default function Dashboard() {
                 })() : <EmptyState title="Data prediksi belum tersedia." />}
               </Panel>
               <div className="metric-grid forecast-metrics">
-                <MetricCard label="MAE" value={rupiah(metric.mae)} note={`Rata-rata selisih antara perkiraan dan kenyataan per hari. Contoh: ${maeInThousands} artinya perkiraan rata-rata meleset sekitar ${maeInThousands} per hari. Makin kecil makin baik.`} />
-                <MetricCard label="RMSE" value={rupiah(metric.rmse)} note="Mirip MAE, tetapi hari dengan selisih besar dihitung lebih berat. Dipakai untuk melihat apakah ada hari yang meleset jauh. Makin kecil makin baik." />
-                <MetricCard label="R²" value={Number.isFinite(Number(metric.r2)) ? Number(metric.r2).toFixed(3) : '—'} note="Seberapa cocok pola model dengan data, skala 0 sampai 1. Mendekati 1 berarti sangat cocok; mendekati 0 berarti model baru sedikit lebih baik daripada menebak rata-rata." />
+                <MetricCard label="Biasanya Meleset (MAE)" value={rupiah(metric.mae)} note={`Perkiraan omzet harian biasanya meleset sekitar ${maeInThousands} dari kenyataan. Makin kecil makin baik.`} />
+                <MetricCard label="Meleset Jauh (RMSE)" value={rupiah(metric.rmse)} note="Seperti di atas, tapi lebih peka pada hari yang meleset jauh. Makin kecil makin baik." />
+                <MetricCard label="Keandalan Perkiraan (R²)" value={hasR2 ? r2Value.toFixed(3) : '—'} badge={hasR2 ? r2Value < 0.3 ? 'Rendah' : r2Value <= 0.6 ? 'Sedang' : 'Baik' : null} note="Seberapa mengikuti pola penjualan asli (skala 0-1). Dekat 0 berarti perkiraan masih kasar." />
               </div>
               <p className="model-note"><TrendingUp size={16} /> Prediksi dimulai setelah data historis terakhir ({metric.last_historical_date || 'tanggal belum tersedia'}). Angka ini perkiraan, bukan jaminan penjualan.</p>
-              {hasLowR2 && <p className="model-note model-warning"><TrendingUp size={16} /> Omzet harian usaha ini naik-turun tidak menentu, jadi perkiraan hanya gambaran kasar, bukan kepastian.</p>}
+              {hasLowR2 && <p className="model-note model-warning">Omzet harian naik-turun tak menentu, jadi perkiraan hanya gambaran kasar.</p>}
             </div>}
 
             {activeTab === 'produk' && <div className="dashboard-content">
-              <Panel title="Klasifikasi produk" description="Klasifikasi terakhir dibandingkan dengan prediksi kelas penjualan untuk minggu depan.">
+              <article className="product-highlight metric-card">
+                <span>Prediksi produk minggu depan</span>
+                <div className="product-highlight-counts">
+                  {['laris', 'kurang laris', 'tidak laris'].map(status => <span key={status}><strong>{integer(productCounts[status])}</strong>{status}</span>)}
+                </div>
+                {productCounts.insufficient > 0 && <small>{integer(productCounts.insufficient)} produk: Data belum cukup</small>}
+              </article>
+              <Panel title="Klasifikasi produk" description="Klasifikasi terakhir dan perkiraan minggu depan.">
                 <ClassificationTable products={classification?.products || []} />
               </Panel>
               <div className="dashboard-two-column product-insights">
-                <Panel title="Ringkasan akurasi" description="Akurasi uji adalah bagian prediksi kelas yang tepat pada data evaluasi.">
+                <Panel title="Ringkasan akurasi">
                   <div className="classification-summary">
                     <strong>{Number.isFinite(Number(classificationMetrics.accuracy_test)) ? `${(Number(classificationMetrics.accuracy_test) * 100).toFixed(1)}%` : '—'}</strong>
                     <span>Akurasi uji · {integer(classificationMetrics.testing_rows)} data</span>
                     <p>{integer(excludedCount)} varian dikecualikan karena data kurang dari 4 minggu dan ditampilkan sebagai “Data belum cukup”.</p>
                   </div>
                 </Panel>
-                <Panel title="Confusion matrix" description="Diagonal menunjukkan jumlah klasifikasi uji yang sesuai dengan kelas aktual.">
+                <Panel title="Confusion matrix" description="Diagonal = prediksi yang tepat.">
                   <ConfusionMatrix matrix={classificationMetrics.confusion_matrix} />
                 </Panel>
               </div>
-              <Panel title="Aturan pohon keputusan" description="Cabang di bawah menunjukkan aturan yang digunakan model untuk menentukan kelas.">
+              <Panel title="Aturan pohon keputusan">
                 {classification?.tree_rules ? <details className="tree-details"><summary>Buka aturan lengkap</summary><pre>{classification.tree_rules}</pre></details> : <EmptyState title="Aturan model belum tersedia." />}
               </Panel>
             </div>}
 
             {activeTab === 'bundling' && <div className="dashboard-content">
+              <article className="metric-card bundle-highlight">
+                <span>Paket paling kuat</span>
+                <strong>{firstBundle ? `${firstBundle.item_a} + ${firstBundle.item_b}` : 'Belum ada rekomendasi'}</strong>
+              </article>
               <div className="bundling-controls">
-                <div><p className="eyebrow">Dasar perhitungan</p><h2>Pilih basis bundling</h2></div>
+                <div><p className="eyebrow">Dasar perhitungan</p><h2>Pilih basis pembelian</h2></div>
                 <div className="segmented-control" role="group" aria-label="Basis bundling">
                   <button type="button" className={basis === 'day' ? 'active' : ''} aria-pressed={basis === 'day'} onClick={() => setBasis('day')}>Per hari</button>
                   <button type="button" className={basis === 'transaction' ? 'active' : ''} aria-pressed={basis === 'transaction'} onClick={() => setBasis('transaction')}>Per transaksi</button>
@@ -512,7 +545,7 @@ export default function Dashboard() {
                 <article className={basis === 'day' ? 'selected' : ''}><span>Aturan basis per hari</span><strong>{integer(bundlings?.day?.rule_count ?? bundlings?.day?.data?.length)}</strong></article>
                 <article className={basis === 'transaction' ? 'selected' : ''}><span>Aturan basis per transaksi</span><strong>{integer(bundlings?.transaction?.rule_count ?? bundlings?.transaction?.data?.length)}</strong></article>
               </div>
-              <Panel title={basis === 'day' ? 'Paket dari pembelian per hari' : 'Paket dari pembelian per transaksi'} description={basis === 'day' ? 'Satu keranjang berarti semua produk yang terjual pada hari yang sama.' : 'Satu keranjang berarti produk-produk dalam satu transaksi kasir atau simulasi.'}>
+              <Panel title="Rekomendasi Paket">
                 <BundlingCards result={activeBundling} />
               </Panel>
             </div>}
