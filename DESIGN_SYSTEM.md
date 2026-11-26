@@ -50,7 +50,8 @@ Warna pendukung yang dipakai langsung pada CSS meliputi putih, `#edf3e8`, `#edf0
 - Kasir: baris produk, ikon produk, kontrol jumlah, hapus item, total nota, keadaan keranjang kosong.
 - Katalog: kartu produk, baris varian aktif/nonaktif, dialog edit/tambah, status dot.
 - Dialog/toast: modal konfirmasi, toast sukses/error/info dengan tombol tutup.
-- Dashboard: tab Ringkasan/Prediksi/Produk/Bundling, kotak "Apa ini?" satu paragraf dengan judul penjelas tebal dan "Cara membaca" beraksen hijau, filter, kartu sorotan dan metrik, panel grafik/tabel, tooltip grafik yang mengikuti titik/batang aktif dan terjangkar relatif ke chart, confusion matrix, segmented control, serta rekomendasi paket dengan label bahasa sehari-hari. Setiap tab mengakhiri konten dengan kotak Kesimpulan berlatar `--lime-soft`, aksen tepi hijau, ikon, judul 16–18 px, dan teks 14 px dengan line-height 1.6.
+- Dashboard: tab Ringkasan/Prediksi/Produk/Bundling, baris penjelas diikuti kotak "Cara membaca" terpisah yang selalu terlihat dengan ikon buku, poin ceklis hijau, dan subjudul kelompok pada Bundling; filter, kartu sorotan dan metrik, panel grafik/tabel, tooltip grafik yang mengikuti titik/batang aktif dan terjangkar relatif ke chart, confusion matrix, segmented control, serta rekomendasi paket dengan label bahasa sehari-hari. Setiap tab mengakhiri konten dengan kotak Kesimpulan berlatar `--lime-soft`, aksen tepi hijau, ikon, judul 16–18 px, dan teks 14 px dengan line-height 1.6.
+- Login: catatan bawah satu baris, rata tengah, dan tidak membungkus pada layar kecil.
 - Feedback: loading spinner dengan pesan dan skeleton pendukung, empty state, dashboard error, badge klasifikasi `laris`/`kurang laris`/`tidak laris`.
 
 ## Breakpoint responsif

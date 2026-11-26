@@ -44,7 +44,7 @@ export default function Login({ onLogin }) {
             {pending ? 'Memproses...' : 'Masuk'} {!pending && <ArrowRight size={18} />}
           </button>
         </form>
-        <p className="login-note"><Store size={16} /> Gunakan akun yang terdaftar untuk mengelola kasir.</p>
+        <p className="login-note"><Store size={16} /> Masuk dengan akun terdaftar.</p>
       </div>
     </div>
   )

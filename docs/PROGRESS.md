@@ -128,3 +128,10 @@
 - **Tooltip:** satu pemeriksaan browser memakai respons API dummy lokal tanpa database. Tooltip garis terjangkar ke titik, berada dalam batas chart, dan bergeser sekitar 9 px ke bawah saat titik berada dekat tepi atas.
 - **Batas perubahan:** hanya `frontend/src/pages/Dashboard.jsx`, `frontend/src/styles.css`, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan backend/ML, endpoint, atau data; tidak ada transaksi maupun penulisan database.
 - **GATE:** `npm run build`: lulus. Perubahan hanya memuat file yang diizinkan; server sementara dihentikan setelah pemeriksaan.
+
+## REVISI TAMPILAN DASHBOARD PUTARAN 4
+
+- **Tampilan:** panduan "Cara membaca" pada empat tab menjadi kotak terpisah berisi poin ceklis; kalimat mengikuti isi yang ditentukan. Panduan Bundling dikelompokkan menjadi "Angka di kartu" dan "Pilihan pengelompokan".
+- **Istilah:** label jumlah pasangan dan pilihan pengelompokan Bundling memakai bahasa awam; teks login diringkas dan diratakan tengah agar muat satu baris di ponsel.
+- **Batas perubahan:** hanya frontend, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan logika, perhitungan, parameter/endpoint API, data, backend/ML, atau database.
+- **GATE:** `npm run build`: lulus. Tidak dilakukan pemeriksaan browser dan tidak dijalankan server.

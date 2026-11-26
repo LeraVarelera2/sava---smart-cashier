@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Activity, Info, LoaderCircle, RefreshCw, Sparkles, TrendingUp } from 'lucide-react'
+import { Activity, BookOpen, CheckCircle2, Info, LoaderCircle, RefreshCw, Sparkles, TrendingUp } from 'lucide-react'
 import { api, notifyApiError } from '../api'
 import { useToast } from '../components/ToastProvider'
 
@@ -15,19 +15,47 @@ const integer = value => new Intl.NumberFormat('id-ID', { maximumFractionDigits:
 const tabHelp = {
   ringkasan: {
     summary: 'Gambaran penjualan usahamu.',
-    detail: 'Historis = catatan penjualan asli. Simulasi = data contoh buatan, bukan penjualan nyata. Kasir = transaksi dari halaman Kasir.',
+    points: [
+      'Historis = catatan penjualan asli.',
+      'Simulasi = data contoh buatan, bukan penjualan nyata.',
+      'Kasir = transaksi dari halaman Kasir.',
+    ],
   },
   prediksi: {
     summary: 'Perkiraan omzet 7 hari ke depan.',
-    detail: 'Garis penuh = omzet sebenarnya. Garis putus-putus = perkiraan. Perkiraan hanya gambaran kasar, bukan kepastian.',
+    points: [
+      'Garis penuh = omzet sebenarnya.',
+      'Garis putus-putus = perkiraan.',
+      'Perkiraan hanya gambaran kasar, bukan kepastian.',
+    ],
   },
   produk: {
     summary: 'Produk mana yang laris dan tidak.',
-    detail: "Laris, Kurang laris, Tidak laris dihitung dari jumlah terjual per minggu. 'Data belum cukup' = terjual kurang dari 4 minggu.",
+    points: [
+      'Laris, Kurang laris, Tidak laris dihitung dari jumlah terjual per minggu.',
+      '"Data belum cukup" = terjual kurang dari 4 minggu.',
+    ],
   },
   bundling: {
     summary: 'Produk yang sering dibeli bersamaan, cocok dijadikan paket.',
-    detail: "Muncul bersama = seberapa sering dua produk terjual bersamaan. Ikut dibeli = jika A dibeli, seberapa sering B ikut. Kekuatan = di atas 1x berarti hubungannya nyata, bukan kebetulan. Per hari = semua produk yang terjual di hari yang sama dianggap satu keranjang (dipakai untuk data historis yang tidak punya nota). Per transaksi = satu nota satu keranjang (untuk data Simulasi dan Kasir). 'Aturan' = jumlah pasangan produk yang ditemukan; misalnya 'aturan per hari 5' berarti ada 5 pasangan produk yang sering terjual bersamaan menurut dasar per hari.",
+    groups: [
+      {
+        title: 'Angka di kartu',
+        points: [
+          'Muncul bersama = seberapa sering dua produk terjual bersamaan.',
+          'Ikut dibeli = jika A dibeli, seberapa sering B ikut.',
+          'Kekuatan = di atas 1x berarti hubungannya nyata, bukan kebetulan.',
+        ],
+      },
+      {
+        title: 'Pilihan pengelompokan',
+        points: [
+          'Per hari = produk yang terjual di hari yang sama dihitung satu keranjang (untuk data historis tanpa nota).',
+          'Per transaksi = satu nota satu keranjang (untuk data Simulasi dan Kasir).',
+          'Jumlah pasangan = banyaknya pasangan produk yang ditemukan; "per hari 5" berarti ada 5 pasangan menurut dasar per hari.',
+        ],
+      },
+    ],
   },
 }
 
@@ -48,13 +76,30 @@ function EmptyState({ title, children }) {
 }
 
 function TabHelp({ children }) {
+  const groups = children.groups || [{ points: children.points }]
+
   return (
-    <aside className="dashboard-help">
-      <div className="dashboard-help-row">
-        <Info size={17} />
-        <p><strong>{children.summary}</strong> <span>Cara membaca:</span> {children.detail}</p>
-      </div>
-    </aside>
+    <>
+      <aside className="dashboard-help">
+        <div className="dashboard-help-row">
+          <Info size={17} />
+          <p><strong>{children.summary}</strong></p>
+        </div>
+      </aside>
+      <aside className="dashboard-reading-guide" aria-label="Cara membaca">
+        <header className="dashboard-reading-title"><BookOpen size={17} /><h2>Cara membaca</h2></header>
+        <div className="dashboard-reading-groups">
+          {groups.map((group, groupIndex) => (
+            <section className="dashboard-reading-group" key={group.title || groupIndex}>
+              {group.title && <h3>{group.title}</h3>}
+              <ul>
+                {group.points.map((point, pointIndex) => <li key={pointIndex}><CheckCircle2 size={16} /><span>{point}</span></li>)}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </aside>
+    </>
   )
 }
 
@@ -479,7 +524,7 @@ export default function Dashboard() {
           </select>
         </label>
       </div>
-      <p className="dashboard-filter-note">Filter berlaku untuk Ringkasan; model memakai historis. Bundling memakai basis pilihan.</p>
+      <p className="dashboard-filter-note">Filter berlaku untuk Ringkasan; model memakai historis. Bundling memakai cara pengelompokan yang dipilih.</p>
 
       <div className="dashboard-tabs" role="tablist" aria-label="Bagian dashboard">
         {tabs.map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={activeTab === id} className={activeTab === id ? 'active' : ''} onClick={() => setActiveTab(id)}>{label}</button>)}
@@ -574,15 +619,15 @@ export default function Dashboard() {
                 <strong>{firstBundle ? `${firstBundle.item_a} + ${firstBundle.item_b}` : 'Belum ada rekomendasi'}</strong>
               </article>
               <div className="bundling-controls">
-                <div><p className="eyebrow">Dasar perhitungan</p><h2>Pilih basis pembelian</h2></div>
-                <div className="segmented-control" role="group" aria-label="Basis bundling">
+                <div><h2>Cara mengelompokkan pembelian:</h2></div>
+                <div className="segmented-control" role="group" aria-label="Cara pengelompokan pembelian">
                   <button type="button" className={basis === 'day' ? 'active' : ''} aria-pressed={basis === 'day'} onClick={() => setBasis('day')}>Per hari</button>
                   <button type="button" className={basis === 'transaction' ? 'active' : ''} aria-pressed={basis === 'transaction'} onClick={() => setBasis('transaction')}>Per transaksi</button>
                 </div>
               </div>
               <div className="bundle-count-grid">
-                <article className={basis === 'day' ? 'selected' : ''}><span>Aturan basis per hari</span><strong>{integer(bundlings?.day?.rule_count ?? bundlings?.day?.data?.length)}</strong></article>
-                <article className={basis === 'transaction' ? 'selected' : ''}><span>Aturan basis per transaksi</span><strong>{integer(bundlings?.transaction?.rule_count ?? bundlings?.transaction?.data?.length)}</strong></article>
+                <article className={basis === 'day' ? 'selected' : ''}><span>Jumlah pasangan per hari</span><strong>{integer(bundlings?.day?.rule_count ?? bundlings?.day?.data?.length)}</strong></article>
+                <article className={basis === 'transaction' ? 'selected' : ''}><span>Jumlah pasangan per transaksi</span><strong>{integer(bundlings?.transaction?.rule_count ?? bundlings?.transaction?.data?.length)}</strong></article>
               </div>
               <Panel title="Rekomendasi Paket">
                 <BundlingCards result={activeBundling} />
