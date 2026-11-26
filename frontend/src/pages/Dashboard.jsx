@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Activity, ChevronDown, Info, LoaderCircle, RefreshCw, TrendingUp } from 'lucide-react'
+import { Activity, Info, LoaderCircle, RefreshCw, Sparkles, TrendingUp } from 'lucide-react'
 import { api, notifyApiError } from '../api'
 import { useToast } from '../components/ToastProvider'
 
@@ -27,9 +27,12 @@ const tabHelp = {
   },
   bundling: {
     summary: 'Produk yang sering dibeli bersamaan, cocok dijadikan paket.',
-    detail: 'Muncul bersama = seberapa sering dua produk terjual bersamaan. Ikut dibeli = jika A dibeli, seberapa sering B ikut. Kekuatan = di atas 1x berarti hubungannya nyata, bukan kebetulan.',
+    detail: "Muncul bersama = seberapa sering dua produk terjual bersamaan. Ikut dibeli = jika A dibeli, seberapa sering B ikut. Kekuatan = di atas 1x berarti hubungannya nyata, bukan kebetulan. Per hari = semua produk yang terjual di hari yang sama dianggap satu keranjang (dipakai untuk data historis yang tidak punya nota). Per transaksi = satu nota satu keranjang (untuk data Simulasi dan Kasir). 'Aturan' = jumlah pasangan produk yang ditemukan; misalnya 'aturan per hari 5' berarti ada 5 pasangan produk yang sering terjual bersamaan menurut dasar per hari.",
   },
 }
+
+const sourceLabels = { semua: 'Semua sumber', historis: 'Historis', simulasi: 'Simulasi', kasir: 'Kasir' }
+const rangeLabels = { '7': '7 hari terakhir', '30': '30 hari terakhir', '90': '90 hari terakhir', semua: 'semua data' }
 
 function periodLabel(value) {
   if (/^\d{4}-\d{2}$/.test(value)) {
@@ -49,14 +52,14 @@ function TabHelp({ children }) {
     <aside className="dashboard-help">
       <div className="dashboard-help-row">
         <Info size={17} />
-        <p>{children.summary}</p>
-        <details className="dashboard-help-details">
-          <summary>Cara membaca <ChevronDown size={15} /></summary>
-          <p>{children.detail}</p>
-        </details>
+        <p><strong>{children.summary}</strong> <span>Cara membaca:</span> {children.detail}</p>
       </div>
     </aside>
   )
+}
+
+function Conclusion({ children }) {
+  return <aside className="dashboard-conclusion"><Sparkles size={17} /><div><h2>Kesimpulan</h2><p>{children}</p></div></aside>
 }
 
 function Panel({ title, description, children, className = '' }) {
@@ -99,7 +102,7 @@ function LineChart({ labels, series, ariaLabel }) {
       value: rupiah(value),
       x: Math.max(8, Math.min(wrapperBounds.width - 8, pointX)),
       y: pointY,
-      align: pointX > wrapperBounds.width - 220 ? 'right' : 'left',
+      align: pointX < 110 ? 'left' : pointX > wrapperBounds.width - 110 ? 'right' : 'center',
       below: pointY < 56,
     })
   }
@@ -323,6 +326,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [summary, setSummary] = useState(null)
+  const [historicalSummary, setHistoricalSummary] = useState(null)
   const [trend, setTrend] = useState([])
   const [topProducts, setTopProducts] = useState([])
   const [busyDays, setBusyDays] = useState([])
@@ -366,6 +370,11 @@ export default function Dashboard() {
       setError(apiError.message)
       notifyApiError(apiError, showToast)
     }).finally(() => { if (current) setLoading(false) })
+    api.dashboardSummary({ source: 'historis', range: 'semua' }).then(result => {
+      if (current) setHistoricalSummary(result.data)
+    }).catch(apiError => {
+      if (current) notifyApiError(apiError, showToast)
+    })
     return () => { current = false }
   }, [activeTab, retry, showToast])
 
@@ -407,6 +416,11 @@ export default function Dashboard() {
   const r2Value = hasR2 ? Number(metric.r2) : null
   const predictedRevenue = forecast?.forecast?.reduce((total, row) => total + (Number(row.omzet) || 0), 0) || 0
   const predictedDays = forecast?.forecast?.length || 0
+  const predictedDailyAverage = predictedDays ? predictedRevenue / predictedDays : 0
+  const historicalPcs = Number(historicalSummary?.total_pcs)
+  const historicalRevenue = Number(historicalSummary?.total_omzet)
+  const historicalAveragePrice = historicalPcs > 0 && Number.isFinite(historicalRevenue) ? historicalRevenue / historicalPcs : null
+  const estimatedDailyPcs = historicalAveragePrice > 0 ? Math.round((predictedDailyAverage / historicalAveragePrice) / 10) * 10 : null
   const productCounts = (classification?.products || []).reduce((counts, product) => {
     const status = String(product.prediksi_minggu_depan || '').toLowerCase()
     if (status === 'laris' || status === 'kurang laris' || status === 'tidak laris') counts[status] += 1
@@ -414,12 +428,37 @@ export default function Dashboard() {
     return counts
   }, { 'laris': 0, 'kurang laris': 0, 'tidak laris': 0, insufficient: 0 })
   const firstBundle = activeBundling?.data?.[0]
+  const larisNames = (classification?.products || []).filter(product => String(product.prediksi_minggu_depan || '').toLowerCase() === 'laris').slice(0, 3).map(product => product.variant_name)
+  const tidakLarisNames = (classification?.products || []).filter(product => String(product.prediksi_minggu_depan || '').toLowerCase() === 'tidak laris').slice(0, 3).map(product => product.variant_name)
+  const accuracyTest = Number(classificationMetrics.accuracy_test)
+  const bundlingRuleCount = Number(activeBundling?.rule_count ?? activeBundling?.data?.length ?? 0)
+  const summaryHasData = Number(summary?.jumlah_transaksi) > 0
+  const busiestDay = busyDays[0]?.hari
+  const busiestHour = busyHours.data?.[0]?.jam
+  const summaryConclusion = !summaryHasData
+    ? 'Belum ada data untuk disimpulkan.'
+    : `Pada ${sourceLabels[source]}, ${rangeLabels[range]}, omzet usahamu ${rupiah(summary.total_omzet)} dari ${integer(summary.jumlah_transaksi)} transaksi. Produk paling laku: ${topProducts[0]?.variant_name || 'belum dapat ditentukan'} (${integer(topProducts[0]?.total_pcs)} pcs); hari paling ramai: ${busiestDay || 'belum dapat ditentukan'}.${busiestHour !== undefined && busiestHour !== null ? ` Jam paling ramai sekitar ${String(busiestHour).padStart(2, '0')}.00.` : ''}`
+  const predictionConclusion = predictedDays === 0
+    ? 'Belum ada data untuk disimpulkan.'
+    : `Perkiraan omzet 7 hari ke depan sekitar ${rupiah(predictedRevenue)}, rata-rata ${rupiah(Math.round(predictedDailyAverage))} per hari.${estimatedDailyPcs !== null ? ` Dengan harga rata-rata sekitar ${rupiah(historicalAveragePrice)} per pcs, itu setara kira-kira ${integer(estimatedDailyPcs)} pcs per hari.` : ''}${hasLowR2 ? ' Karena omzet harian naik-turun, anggap ini gambaran kasar, bukan kepastian.' : ''}`
+  const productConclusion = !(classification?.products?.length)
+    ? 'Belum ada data untuk disimpulkan.'
+    : [
+      [
+        productCounts.laris > 0 ? `${integer(productCounts.laris)} produk diperkirakan laris minggu depan: ${larisNames.join(', ')}` : '',
+        productCounts['tidak laris'] > 0 ? `${integer(productCounts['tidak laris'])} produk diperkirakan tidak laris: ${tidakLarisNames.join(', ')}` : '',
+      ].filter(Boolean).join('; ') + (productCounts.laris > 0 || productCounts['tidak laris'] > 0 ? '.' : ''),
+      productCounts.insufficient > 0 ? `${integer(productCounts.insufficient)} produk datanya belum cukup untuk dinilai.` : '',
+      classificationMetrics.accuracy_test !== null && classificationMetrics.accuracy_test !== undefined && Number.isFinite(accuracyTest) ? `Akurasi model sekitar ${(accuracyTest * 100).toFixed(1)}%, jadi pakai sebagai pegangan, bukan kepastian.` : '',
+    ].filter(Boolean).join(' ') || 'Belum ada data untuk disimpulkan.'
+  const bundlingConclusion = firstBundle
+    ? `Paket yang disarankan: ${firstBundle.item_a} + ${firstBundle.item_b}. Pasangan ini muncul bersama pada ${(Number(firstBundle.support) * 100).toFixed(1)}% ${basis === 'day' ? 'hari' : 'transaksi'} dan ${Number(firstBundle.lift).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}x lebih sering bersama dibanding kebetulan, yang terkuat dari ${integer(bundlingRuleCount)} pasangan yang ditemukan. Jika beli ${firstBundle.item_a}, ${(Number(firstBundle.confidence) * 100).toFixed(1)}% ikut membeli ${firstBundle.item_b}.`
+    : 'Belum ditemukan pola yang cukup kuat untuk dijadikan paket pada dasar perhitungan ini.'
 
   return (
     <section className="dashboard-page">
       <header className="page-header dashboard-header">
         <div><p className="eyebrow">Analitik usaha</p><h1>Dashboard</h1></div>
-        <button type="button" className="secondary-button dashboard-refresh" onClick={() => setRetry(value => value + 1)} disabled={loading}>{loading ? <LoaderCircle className="loading-spinner" size={16} /> : <RefreshCw size={16} />} Muat ulang</button>
       </header>
 
       <div className="dashboard-filters">
@@ -474,6 +513,7 @@ export default function Dashboard() {
                   {busyHours.data?.length ? <BarList items={busyHours.data} label={item => `${String(item.jam).padStart(2, '0')}.00`} value={item => item.jumlah_transaksi} display={item => `${integer(item.jumlah_transaksi)} transaksi`} /> : <EmptyState title={busyHours.message || 'Belum ada data jam transaksi.'} />}
                 </Panel>
               </div>
+              <Conclusion>{summaryConclusion}</Conclusion>
             </div>}
 
             {activeTab === 'prediksi' && <div className="dashboard-content">
@@ -499,6 +539,7 @@ export default function Dashboard() {
               </div>
               <p className="model-note"><TrendingUp size={16} /> Prediksi dimulai setelah data historis terakhir ({metric.last_historical_date || 'tanggal belum tersedia'}). Angka ini perkiraan, bukan jaminan penjualan.</p>
               {hasLowR2 && <p className="model-note model-warning">Omzet harian naik-turun tak menentu, jadi perkiraan hanya gambaran kasar.</p>}
+              <Conclusion>{predictionConclusion}</Conclusion>
             </div>}
 
             {activeTab === 'produk' && <div className="dashboard-content">
@@ -524,9 +565,7 @@ export default function Dashboard() {
                   <ConfusionMatrix matrix={classificationMetrics.confusion_matrix} />
                 </Panel>
               </div>
-              <Panel title="Aturan pohon keputusan">
-                {classification?.tree_rules ? <details className="tree-details"><summary>Buka aturan lengkap</summary><pre>{classification.tree_rules}</pre></details> : <EmptyState title="Aturan model belum tersedia." />}
-              </Panel>
+              <Conclusion>{productConclusion}</Conclusion>
             </div>}
 
             {activeTab === 'bundling' && <div className="dashboard-content">
@@ -548,6 +587,7 @@ export default function Dashboard() {
               <Panel title="Rekomendasi Paket">
                 <BundlingCards result={activeBundling} />
               </Panel>
+              <Conclusion>{bundlingConclusion}</Conclusion>
             </div>}
           </>}
     </section>

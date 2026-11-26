@@ -119,3 +119,12 @@
 - **Tombol:** label muat ulang memakai ikon refresh dan spinner saat memuat; "Coba lagi" tetap tersedia pada keadaan error. Filter sumber dimulai dari historis.
 - **Batas perubahan:** hanya `frontend/src/pages/Dashboard.jsx`, `frontend/src/styles.css`, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan backend/ML, endpoint, logika analisis, atau data; tidak dijalankan server dan tidak ditulis database.
 - **GATE:** `npm run build`: lulus. `git diff --name-only` hanya memuat empat file yang diizinkan. Tidak dilakukan pemeriksaan browser sesuai permintaan.
+
+## REVISI TAMPILAN DASHBOARD PUTARAN 3 ✅
+
+- **Tanggal:** 2026-11-26
+- **Kesimpulan:** tiap tab Dashboard menampilkan ringkasan kalimat dari data API; Prediksi memakai ringkasan historis seluruh rentang untuk estimasi pcs harian bila dapat dihitung. Kondisi tanpa data dan tanpa aturan bundling memiliki teks khusus.
+- **Bantuan dan KPI:** "Cara membaca" kini tampil langsung dalam satu paragraf; penjelasan Bundling menerangkan basis hari/transaksi dan arti aturan. KPI diperkecil dan dirapatkan. Tombol "Muat ulang" serta tampilan mentah aturan pohon dihapus; "Coba lagi" tetap tersedia.
+- **Tooltip:** satu pemeriksaan browser memakai respons API dummy lokal tanpa database. Tooltip garis terjangkar ke titik, berada dalam batas chart, dan bergeser sekitar 9 px ke bawah saat titik berada dekat tepi atas.
+- **Batas perubahan:** hanya `frontend/src/pages/Dashboard.jsx`, `frontend/src/styles.css`, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan backend/ML, endpoint, atau data; tidak ada transaksi maupun penulisan database.
+- **GATE:** `npm run build`: lulus. Perubahan hanya memuat file yang diizinkan; server sementara dihentikan setelah pemeriksaan.
