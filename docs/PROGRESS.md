@@ -135,3 +135,10 @@
 - **Istilah:** label jumlah pasangan dan pilihan pengelompokan Bundling memakai bahasa awam; teks login diringkas dan diratakan tengah agar muat satu baris di ponsel.
 - **Batas perubahan:** hanya frontend, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan logika, perhitungan, parameter/endpoint API, data, backend/ML, atau database.
 - **GATE:** `npm run build`: lulus. Tidak dilakukan pemeriksaan browser dan tidak dijalankan server.
+
+## REVISI TAMPILAN DASHBOARD PUTARAN 5
+
+- **Tata letak:** kelompok isi "Cara membaca" pada Bundling tersusun dua kolom sama lebar di desktop, dengan jarak 32 px dan rata kiri; tiga tab lain tetap satu kolom. Sampai lebar 900 px tata letak satu kolom tetap dipertahankan.
+- **Pemeriksaan:** pada 1440 px, tepi kiri ikon panduan terhadap ikon poin/subjudul berbeda 0 px di keempat tab; Bundling memakai dua kolom dan selisih tinggi subjudul 0 px. Pada 390 px, semua tab satu kolom dengan selisih tepi kiri 0 px; dua kelompok Bundling tersusun vertikal.
+- **Batas perubahan:** hanya `frontend/src/pages/Dashboard.jsx`, `frontend/src/styles.css`, `DESIGN_SYSTEM.md`, dan log ini. Isi panduan, logika, API, dan data tidak diubah; tidak ada transaksi atau penulisan database.
+- **GATE:** `npm run build`: lulus. Server sementara dihentikan setelah pemeriksaan.

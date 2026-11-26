@@ -88,14 +88,14 @@ function TabHelp({ children }) {
       </aside>
       <aside className="dashboard-reading-guide" aria-label="Cara membaca">
         <header className="dashboard-reading-title"><BookOpen size={17} /><h2>Cara membaca</h2></header>
-        <div className="dashboard-reading-groups">
+        <div className={`dashboard-reading-groups ${children.groups ? 'is-two-column' : ''}`}>
           {groups.map((group, groupIndex) => (
-            <section className="dashboard-reading-group" key={group.title || groupIndex}>
+            <div className="dashboard-reading-group" key={group.title || groupIndex}>
               {group.title && <h3>{group.title}</h3>}
               <ul>
                 {group.points.map((point, pointIndex) => <li key={pointIndex}><CheckCircle2 size={16} /><span>{point}</span></li>)}
               </ul>
-            </section>
+            </div>
           ))}
         </div>
       </aside>

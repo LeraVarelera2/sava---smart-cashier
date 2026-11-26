@@ -227,10 +227,11 @@ input:focus, textarea:focus, select:focus { border-color: #719680; box-shadow: 0
 .dashboard-reading-title { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; }
 .dashboard-reading-title > svg { flex: 0 0 auto; color: var(--forest-2); }
 .dashboard-reading-title h2 { margin: 0; color: var(--forest); font-size: 15px; font-weight: 700; }
-.dashboard-reading-groups { display: grid; gap: 9px; }
-.dashboard-reading-group h3 { margin: 0 0 5px; color: var(--forest-2); font-size: 13px; font-weight: 700; }
-.dashboard-reading-group ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.dashboard-reading-group li { display: flex; align-items: flex-start; gap: 7px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.dashboard-reading-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 9px; text-align: left; }
+.dashboard-reading-group { min-width: 0; text-align: left; }
+.dashboard-reading-group h3 { margin: 0 0 5px; color: var(--forest-2); font-size: 13px; font-weight: 700; text-align: left; }
+.dashboard-reading-group ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; text-align: left; }
+.dashboard-reading-group li { display: flex; align-items: flex-start; gap: 7px; color: var(--muted); font-size: 13px; line-height: 1.5; text-align: left; }
 .dashboard-reading-group li > svg { flex: 0 0 auto; margin-top: 2px; color: var(--success); }
 .dashboard-conclusion { display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; border-left: 4px solid var(--forest-2); border-radius: 12px; background: var(--lime-soft); }
 .dashboard-conclusion > svg { flex: 0 0 auto; margin-top: 3px; color: var(--forest-2); }
@@ -373,6 +374,10 @@ input:focus, textarea:focus, select:focus { border-color: #719680; box-shadow: 0
   .mobile-logout { display: inline-flex; }
   .profile-summary { min-height:150px; }
   .profile-summary h2 { margin-top:18px; }
+}
+
+@media (min-width: 901px) {
+  .dashboard-reading-groups.is-two-column { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; row-gap: 0; align-items: start; }
 }
 
 @media (max-width: 520px) {
