@@ -51,6 +51,9 @@ Warna pendukung yang dipakai langsung pada CSS meliputi putih, `#edf3e8`, `#edf0
 - Katalog: kartu produk, baris varian aktif/nonaktif, dialog edit/tambah, status dot.
 - Dialog/toast: modal konfirmasi, toast sukses/error/info dengan tombol tutup.
 - Dashboard: tab Ringkasan/Prediksi/Produk/Bundling, baris penjelas diikuti kotak "Cara membaca" terpisah yang selalu terlihat dengan ikon buku dan poin ceklis hijau; kelompok Bundling tersusun dua kolom rata kiri yang sejajar di desktop (lebar minimum 901 px), sementara layar sampai 900 px mempertahankan satu kolom. Filter, kartu sorotan dan metrik, panel grafik/tabel, tooltip grafik yang mengikuti titik/batang aktif dan terjangkar relatif ke chart, confusion matrix, segmented control, serta rekomendasi paket dengan label bahasa sehari-hari. Setiap tab mengakhiri konten dengan kotak Kesimpulan berlatar `--lime-soft`, aksen tepi hijau, ikon, judul 16–18 px, dan teks 14 px dengan line-height 1.6.
+- Laporan: baris penjelas dan kotak "Cara membaca", filter periode/sumber, empat kartu KPI, Kesimpulan hijau, grafik omzet harian dengan tooltip di atas batang, tabel rekap, produk teratas, serta rincian transaksi yang bisa dicari dan dipaginasi. Rincian menjadi kartu pada layar sampai 900 px. Tombol menyiapkan cetak/PDF atau CSV rekap dan rincian sesuai filter aktif.
+- Cetak laporan: halaman A4 portrait dengan margin 15 mm; kop usaha/periode/sumber, KPI, Kesimpulan, grafik, rekap harian, produk teratas, dan seluruh rincian transaksi. Navigasi, filter, tombol, rincian layar, paginasi, serta toast disembunyikan; judul kolom tabel diulang dan baris dijaga agar tidak terpotong.
+- Kasir: pada desktop panel keranjang menempel di viewport; kepala dan footer total/aksi tetap, sementara daftar item menggulir sendiri. Pada ponsel panel dibuka sebagai laci dengan tinggi terbatas dan area item yang menggulir sendiri; tombol buka/tutup memakai ruang di atas navigasi bawah.
 - Login: catatan bawah satu baris, rata tengah, dan tidak membungkus pada layar kecil.
 - Feedback: loading spinner dengan pesan dan skeleton pendukung, empty state, dashboard error, badge klasifikasi `laris`/`kurang laris`/`tidak laris`.
 
@@ -66,6 +69,7 @@ Warna pendukung yang dipakai langsung pada CSS meliputi putih, `#edf3e8`, `#edf0
 - **Dashboard** (`/dashboard`): ringkasan dan filter; tab prediksi, analisis produk, serta bundling.
 - **Kasir** (`/kasir`): pilih varian, ubah jumlah, tinjau total, simpan transaksi.
 - **Katalog** (`/katalog`): tambah/ubah produk dan varian; produk ber-riwayat dinonaktifkan, bukan dihapus dari histori.
+- **Laporan** (`/laporan`): tinjau, cari, ekspor, dan cetak rekap penjualan.
 - **Profil** (`/profil`): lihat dan ubah informasi usaha.
 
-Alur singkat: login → dashboard untuk memeriksa kinerja → kasir untuk mencatat penjualan → katalog/profil untuk mengelola data → kembali ke dashboard untuk melihat analisis terbaru. Logout mengakhiri sesi dan kembali ke login.
+Urutan navigasi: Beranda, Kasir, Katalog, Laporan, Profil. Alur singkat: login → dashboard untuk memeriksa kinerja → kasir untuk mencatat penjualan → katalog/laporan/profil untuk mengelola atau meninjau data → kembali ke dashboard untuk melihat analisis terbaru. Logout mengakhiri sesi dan kembali ke login.

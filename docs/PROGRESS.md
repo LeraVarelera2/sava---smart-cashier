@@ -150,3 +150,11 @@
 - **Dokumentasi:** kontrak dan contoh di `docs/api.md`, dua entri endpoint di README, dua request di koleksi Postman, dan catatan ini. Tidak ada perubahan pada endpoint/perhitungan lama, skema, frontend, atau layanan ML.
 - **GATE:** `php artisan test`: 14 tes, 164 assertion lulus pada `sava_test`; Pint untuk seluruh file PHP baru lulus; JSON koleksi Postman valid. `migrate:fresh --seed` dan verifikasi HTTP dijalankan hanya pada `sava_test`; server sementara dihentikan.
 - **Verifikasi angka historis (2026-05-29–2026-11-09):** 699 transaksi, omzet Rp72.141.000, 23.915 pcs. Jumlah omzet harian Rp72.141.000. Ringkasan sama dengan `/api/dashboard/summary?source=historis&range=semua` untuk omzet, jumlah transaksi, dan pcs. Paginator berisi 699 baris; jumlah `total_amount` seluruh baris Rp72.141.000.
+
+## LAPORAN PENJUALAN BAGIAN B ✅
+
+- **Tanggal:** 2026-11-27
+- **Kasir:** panel keranjang desktop menempel di layar dengan kepala/footer tetap dan daftar item yang menggulir sendiri. Ponsel memakai laci dengan tinggi terbatas, tombol buka/tutup, footer tetap, dan daftar item yang menggulir sendiri. Logika keranjang dan penyimpanan transaksi tidak diubah.
+- **Laporan:** rute terlindungi `/laporan` dan menu di antara Katalog dan Profil; filter periode/sumber, KPI, Kesimpulan, grafik, rekap harian, produk teratas, rincian dengan pencarian/paginasi, unduhan CSV, serta tampilan cetak A4.
+- **GATE:** `npm run build`: lulus. Pemeriksaan satu sesi browser pada desktop dan ponsel: 30 item keranjang, tombol Simpan transaksi tetap terlihat, tanpa menyimpan transaksi; halaman Laporan memuat November 2026 (79 transaksi, Rp4.905.000); rentang tanggal dan pencarian "Coklat" bekerja. Media cetak menyembunyikan navigasi/filter/rincian layar dan menampilkan kop serta seluruh 456 transaksi yang cocok dengan pencarian pada rentang uji.
+- **Batas perubahan:** hanya frontend, `DESIGN_SYSTEM.md`, dan log ini. Tidak ada perubahan backend/ML, endpoint, data produksi, atau perhitungan Kasir; pemeriksaan memakai server yang diarahkan ke `sava_test`.

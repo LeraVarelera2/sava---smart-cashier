@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Minus, Plus, Search, Trash2, ShoppingCart, ReceiptText } from 'lucide-react'
+import { Minus, Plus, Search, Trash2, ShoppingCart, ReceiptText, X } from 'lucide-react'
 import { api, notifyApiError } from '../api'
 import { useToast } from '../components/ToastProvider'
 
@@ -13,6 +13,7 @@ export default function Cashier() {
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [pending, setPending] = useState(false)
+  const [mobileCartOpen, setMobileCartOpen] = useState(false)
 
   async function load() {
     setLoading(true)
@@ -68,8 +69,8 @@ export default function Cashier() {
               ))}
             </div> : <div className="empty-state"><PackageIcon /><h3>Tidak ada produk</h3><p>Sesuaikan pencarian atau tambahkan produk di Katalog.</p></div>}
         </div>
-        <aside className="cart-pane">
-          <div className="cart-heading"><div><ReceiptText size={20} /><h2>Keranjang</h2></div><span>{cart.length} item</span></div>
+        <aside className={`cart-pane ${mobileCartOpen ? 'mobile-cart-open' : ''}`}>
+          <div className="cart-heading"><div><ReceiptText size={20} /><h2>Keranjang</h2></div><span>{cart.length} item</span><button type="button" className="cart-close" aria-label="Tutup keranjang" onClick={() => setMobileCartOpen(false)}><X size={19} /></button></div>
           <div className="cart-items">
             {!cart.length ? <div className="cart-empty"><ShoppingCart size={28} /><p>Keranjang masih kosong</p></div> :
               cart.map(item => (
@@ -87,6 +88,10 @@ export default function Cashier() {
           </div>
         </aside>
       </div>
+      {mobileCartOpen && <button type="button" className="mobile-cart-backdrop" aria-label="Tutup keranjang" onClick={() => setMobileCartOpen(false)} />}
+      <button type="button" className="mobile-cart-toggle" aria-expanded={mobileCartOpen} onClick={() => setMobileCartOpen(open => !open)}>
+        <ShoppingCart size={18} /><span>Keranjang · {cart.length}</span><strong>{rupiah(total)}</strong>
+      </button>
     </section>
   )
 }

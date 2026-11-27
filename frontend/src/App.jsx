@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Navigate, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, ShoppingBasket, PackageOpen, Store, LogOut } from 'lucide-react'
+import { LayoutDashboard, ShoppingBasket, PackageOpen, FileText, Store, LogOut } from 'lucide-react'
 import { api, clearSession, getToken, getUser, setSession } from './api'
 import { ToastProvider, useToast } from './components/ToastProvider'
 import Login from './pages/Login'
@@ -8,6 +8,7 @@ import Cashier from './pages/Cashier'
 import Catalog from './pages/Catalog'
 import Profile from './pages/Profile'
 import Dashboard from './pages/Dashboard'
+import Report from './pages/Report'
 
 function Protected({ children }) {
   return getToken() ? children : <Navigate to="/login" replace />
@@ -61,6 +62,7 @@ function AppRoutes() {
     ['/dashboard', LayoutDashboard, 'Beranda'],
     ['/kasir', ShoppingBasket, 'Kasir'],
     ['/katalog', PackageOpen, 'Katalog'],
+    ['/laporan', FileText, 'Laporan'],
     ['/profil', Store, 'Profil'],
   ]
 
@@ -86,6 +88,7 @@ function AppRoutes() {
           <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
           <Route path="/kasir" element={<Protected><Cashier /></Protected>} />
           <Route path="/katalog" element={<Protected><Catalog /></Protected>} />
+          <Route path="/laporan" element={<Protected><Report /></Protected>} />
           <Route path="/profil" element={<Protected><Profile onLogout={handleLogout} /></Protected>} />
           <Route path="/login" element={<Navigate to="/kasir" replace />} />
           <Route path="*" element={<Navigate to="/kasir" replace />} />
