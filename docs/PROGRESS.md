@@ -142,3 +142,11 @@
 - **Pemeriksaan:** pada 1440 px, tepi kiri ikon panduan terhadap ikon poin/subjudul berbeda 0 px di keempat tab; Bundling memakai dua kolom dan selisih tinggi subjudul 0 px. Pada 390 px, semua tab satu kolom dengan selisih tepi kiri 0 px; dua kelompok Bundling tersusun vertikal.
 - **Batas perubahan:** hanya `frontend/src/pages/Dashboard.jsx`, `frontend/src/styles.css`, `DESIGN_SYSTEM.md`, dan log ini. Isi panduan, logika, API, dan data tidak diubah; tidak ada transaksi atau penulisan database.
 - **GATE:** `npm run build`: lulus. Server sementara dihentikan setelah pemeriksaan.
+
+## LAPORAN PENJUALAN BAGIAN A ✅
+
+- **Tanggal:** 2026-11-27
+- **API:** ditambahkan endpoint hanya-baca `/api/reports/sales` dan `/api/reports/transactions` di dalam `auth:sanctum`, termasuk validasi sumber/tanggal/rentang, ringkasan agregat harian dan produk, pencarian transaksi, paginasi hingga 1000, serta format jam lokal.
+- **Dokumentasi:** kontrak dan contoh di `docs/api.md`, dua entri endpoint di README, dua request di koleksi Postman, dan catatan ini. Tidak ada perubahan pada endpoint/perhitungan lama, skema, frontend, atau layanan ML.
+- **GATE:** `php artisan test`: 14 tes, 164 assertion lulus pada `sava_test`; Pint untuk seluruh file PHP baru lulus; JSON koleksi Postman valid. `migrate:fresh --seed` dan verifikasi HTTP dijalankan hanya pada `sava_test`; server sementara dihentikan.
+- **Verifikasi angka historis (2026-05-29–2026-11-09):** 699 transaksi, omzet Rp72.141.000, 23.915 pcs. Jumlah omzet harian Rp72.141.000. Ringkasan sama dengan `/api/dashboard/summary?source=historis&range=semua` untuk omzet, jumlah transaksi, dan pcs. Paginator berisi 699 baris; jumlah `total_amount` seluruh baris Rp72.141.000.

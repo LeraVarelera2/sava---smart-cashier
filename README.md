@@ -214,6 +214,9 @@ Workbook Excel, kredensial `.env`, virtualenv, dan dependency terpasang tidak di
 
 Daftar lengkap, autentikasi, parameter, serta contoh payload/response ada di [docs/api.md](docs/api.md). Ringkasnya, backend menyediakan autentikasi, katalog, transaksi, dashboard, profil usaha, dan proxy ML pada `/api/*`; FastAPI menyediakan health serta endpoint analitik pada `/health`, `/forecast`, `/classification`, `/bundling`, dan `/evaluation`.
 
+- `GET /api/reports/sales` — ringkasan omzet, transaksi harian, dan produk teratas; hanya-baca.
+- `GET /api/reports/transactions` — daftar transaksi terfilter dan berpaginasi untuk laporan/ekspor; hanya-baca.
+
 Koleksi ringkas untuk Postman tersedia di `postman/Sava.postman_collection.json`. Variabel password diisi lokal pada Postman; jangan simpan rahasia ke file collection. Koleksi membuat transaksi permanen, jadi arahkan ke `sava_test` untuk tes.
 
 ## Catatan data dan model

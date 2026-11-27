@@ -31,6 +31,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/transactions', [TransactionController::class, 'store']);
     Route::get('/transactions', [TransactionController::class, 'index']);
 
+    // Reports
+    Route::get('/reports/sales', [\App\Http\Controllers\ReportController::class, 'sales']);
+    Route::get('/reports/transactions', [\App\Http\Controllers\ReportController::class, 'transactions']);
+
     // Dashboard
     Route::get('/dashboard/summary', [DashboardController::class, 'summary']);
     Route::get('/dashboard/trend', [DashboardController::class, 'trend']);
